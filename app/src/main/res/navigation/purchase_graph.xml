@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/purchase_graph"
+    app:startDestination="@id/fragment_page_sell">
+
+    <fragment
+        android:id="@+id/fragment_page_sell"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageSellFragment"
+        android:label="Sell">
+
+        <action
+            android:id="@+id/action_pageSell_to_pageCart"
+            app:destination="@id/fragment_page_cart"/>
+
+        <action
+            android:id="@+id/action_pageSell_to_quantityDialog"
+            app:destination="@id/dialog_quantity"/>
+        <action
+            android:id="@+id/action_pageSell_to_priceDialog"
+            app:destination="@id/dialog_price"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_page_cart"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageCartFragment"
+        android:label="Cart">
+
+        <action
+            android:id="@+id/action_pageCart_to_pagePayment"
+            app:destination="@id/fragment_page_payment"/>
+
+        <action
+            android:id="@+id/action_pageCart_to_noteDialog"
+            app:destination="@id/dialog_note"/>
+        <action
+            android:id="@+id/action_pageCart_to_discountDialog"
+            app:destination="@id/dialog_discount"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_page_payment"
+        android:name="com.example.lesantarosa.ui.fragment.page.PagePaymentFragment"
+        android:label="Payment">
+
+        <argument
+            android:name="finalPrice"
+            app:argType="float"/>
+
+        <action
+            android:id="@+id/action_pagePayment_to_priceDialog"
+            app:destination="@id/dialog_price"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dialog_quantity"
+        android:name="com.example.lesantarosa.ui.fragment.bottomsheet.QuantityBottomSheetDialogFragment"
+        android:label="Quantity">
+
+        <argument
+            android:name="initialQuantity"
+            app:argType="integer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dialog_note"
+        android:name="com.example.lesantarosa.ui.fragment.bottomsheet.NoteBottomSheetDialogFragment"
+        android:label="Notes">
+
+        <argument
+            android:name="initialNote"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dialog_price"
+        android:name="com.example.lesantarosa.ui.fragment.bottomsheet.PriceBottomSheetDialogFragment"
+        android:label="Price">
+
+        <argument
+            android:name="initialPrice"
+            app:argType="float"/>
+        <argument
+            android:name="priceLimit"
+            app:argType="float"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dialog_discount"
+        android:name="com.example.lesantarosa.ui.fragment.bottomsheet.DiscountBottomSheetDialogFragment"
+        android:label="Discount">
+
+        <argument
+            android:name="totalPrice"
+            app:argType="float"/>
+        <argument
+            android:name="actualDiscount"
+            app:argType="float"/>
+    </fragment>
+
+</navigation>

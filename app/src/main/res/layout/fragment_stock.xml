@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/actual_stock_input_layout"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="0"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/min_stock_input_layout"/>
+
+    <EditText
+        android:id="@+id/min_stock_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toTopOf="@id/max_stock_input_layout"/>
+
+    <EditText
+        android:id="@+id/max_stock_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toTopOf="@id/stock_transaction_history_button"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/stock_transaction_history_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="transaction history"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toTopOf="@id/save_stock_button"/>
+
+    <Button
+        android:id="@+id/save_stock_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

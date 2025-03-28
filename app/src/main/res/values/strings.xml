@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Lesantarosa</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_sell">Sell</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_products">Products</string>
+    <string name="nav_recipes">Recipes</string>
+    <string name="nav_ingredients">Ingredients</string>
+
+    <!-- Menus -->
+    <string name="menu_management_share">Share</string>
+    <string name="menu_management_remove">Remove</string>
+
+    <string name="menu_cart_clear">Clear</string>
+
+    <string name="menu_note_clear">Clear</string>
+
+    <!-- Tabs -->
+    <string name="tab_inventory_items">Items</string>
+    <string name="tab_inventory_stocks">Stocks</string>
+    <string name="tab_inventory_categories">Categories</string>
+
+    <string name="tab_management_manage">Manage</string>
+    <string name="tab_management_stock">Stock</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_options_button_to_note">Notes</string>
+    <string name="dialog_options_button_to_discount">Discounts</string>
+    <string name="dialog_options_button_to_clear_cart">Clear Cart</string>
+    <string name="dialog_options_button_close_content_description">Close Button</string>
+
+    <string name="dialog_category_input_hint">Enter Category Name</string>
+    <string name="dialog_category_char_limit">Limit 20 characters</string>
+
+    <string name="dialog_discount_fixed_discount">Fixed Discount</string>
+    <string name="dialog_discount_percentage_discount">Percentage Discount</string>
+    <string name="dialog_discount_final_price">Final Price:</string>
+    <string name="dialog_discount_fixed_discount_input_hint">Enter Discount Value</string>
+    <string name="dialog_discount_percentage_discount_input_hint">Enter Percentage Value</string>
+
+    <string name="dialog_note_input_note_hint">Enter a Note</string>
+
+    <string name="dialog_payment_methods_title">Payment Methods</string>
+
+    <!-- Inputs & Placeholders -->
+    <string name="button_save">Save</string>
+    <string name="button_confirm">Confirm</string>
+
+    <string name="input_initial_quantity">0</string>
+    <string name="input_initial_price">R$ 0.00</string>
+
+    <string name="input_search_hint">Search Here</string>
+
+    <string name="item_title_hint">Title</string>
+    <string name="item_price_hint">Price</string>
+    <string name="item_description_hint">Description</string>
+
+</resources>

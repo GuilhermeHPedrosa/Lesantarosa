@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_page_home">
+
+    <!-- ===================== Pages ===================== -->
+
+    <fragment
+        android:id="@+id/fragment_page_home"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageHomeFragment"
+        android:label="Home"/>
+
+    <fragment
+        android:id="@+id/fragment_page_orders"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageHomeFragment"
+        android:label="Orders"/>
+
+    <include app:graph="@navigation/inventory_graph"/>
+    <include app:graph="@navigation/purchase_graph"/>
+
+    <!-- ===================== Global Actions ===================== -->
+
+    <action
+        android:id="@+id/action_global_to_pageHome"
+        app:destination="@id/fragment_page_home"/>
+
+    <action
+        android:id="@+id/action_global_to_pageSell"
+        app:destination="@id/purchase_graph"/>
+
+    <action
+        android:id="@+id/action_global_to_pageOrders"
+        app:destination="@id/fragment_page_orders"/>
+
+    <action
+        android:id="@+id/action_global_to_pageInventory"
+        app:destination="@id/inventory_graph">
+
+        <argument
+            android:name="itemType"
+            app:argType="string"/>
+    </action>
+
+</navigation>

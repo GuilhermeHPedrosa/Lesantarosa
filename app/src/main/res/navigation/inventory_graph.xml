@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inventory_graph"
+    app:startDestination="@id/fragment_page_inventory">
+
+    <fragment
+        android:id="@+id/fragment_page_inventory"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageInventoryFragment"
+        android:label="Inventory">
+
+        <argument
+            android:name="itemType"
+            app:argType="string"/>
+
+        <action
+            android:id="@+id/action_pageInventory_to_pageManagement"
+            app:destination="@id/fragment_page_management"/>
+        <action
+            android:id="@+id/action_pageInventory_to_dialogCategory"
+            app:destination="@id/dialog_category"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_page_management"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageManagementFragment"
+        android:label="Management">
+
+        <argument
+            android:name="itemId"
+            app:argType="long"/>
+        <argument
+            android:name="itemType"
+            app:argType="com.example.lesantarosa.models.enums.ItemType"/>
+        <argument
+            android:name="initialPosition"
+            app:argType="integer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dialog_category"
+        android:name="com.example.lesantarosa.ui.fragment.bottomsheet.CategoryBottomSheetDialogFragment"
+        android:label="Category">
+
+        <argument
+            android:name="categoryId"
+            app:argType="long"/>
+        <argument
+            android:name="categoryTitle"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+</navigation>
