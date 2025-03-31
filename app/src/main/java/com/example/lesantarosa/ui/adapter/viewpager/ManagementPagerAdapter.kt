@@ -11,7 +11,7 @@ class ManagementPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment)
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> CreationFragment.newInstance()
+            0 -> CreationFragment()
             1 -> StockFragment()
             else -> throw Exception("Invalid Position")
         }
