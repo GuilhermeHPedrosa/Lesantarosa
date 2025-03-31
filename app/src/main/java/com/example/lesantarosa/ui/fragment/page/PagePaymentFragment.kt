@@ -15,6 +15,7 @@ import com.example.lesantarosa.models.data.Payment
 import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.bottomsheet.PaymentMethodsBottomSheetDialog
 import com.example.lesantarosa.ui.fragment.component.PaymentsFragment
+import com.example.lesantarosa.ui.fragment.formatPrice
 import com.example.lesantarosa.ui.viewmodel.PaymentViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -61,9 +62,13 @@ class PagePaymentFragment: PageFragment() {
 
         initializePaymentFragment()
 
+        setupFinalPaymentPrice()
+
+        observePayments()
         observePaymentSelectionResult()
 
         handleShowPaymentMethodsButton()
+        handleFinishOrderButton()
     }
 
     private fun initializePaymentFragment() {
@@ -75,10 +80,26 @@ class PagePaymentFragment: PageFragment() {
             .commit()
     }
 
+    private fun setupFinalPaymentPrice() {
+        val finalPaymentPriceTextView = binding.finalPaymentPriceTextview
+        finalPaymentPriceTextView.text = finalPaymentPrice.formatPrice()
+    }
+
+    private fun setupTotalRemainingPrice() {
+        val totalRemainingPriceTextview = binding.totalRemainingPriceTextview
+        totalRemainingPriceTextview.text = viewModel.totalRemainingPrice.formatPrice()
+    }
+
     private fun observePaymentSelectionResult() {
         setFragmentResultListener(PRICE_REQUEST_KEY) { _, bundle ->
             val selectedPrice: Double = bundle.getDouble(PRICE_VALUE_KEY)
-            viewModel.savePayment(Payment(viewModel.paymentMethod, selectedPrice))
+            viewModel.savePayment(selectedPrice)
+        }
+    }
+
+    private fun observePayments() {
+        viewModel.payments.observe(viewLifecycleOwner) {
+            setupTotalRemainingPrice()
         }
     }
 
@@ -87,6 +108,11 @@ class PagePaymentFragment: PageFragment() {
         showPaymentMethodsButton.setOnClickListener {
             paymentMethodsDialog.show()
         }
+    }
+
+    private fun handleFinishOrderButton() {
+        val finishOrderButton = binding.finishOrderButton
+        finishOrderButton.setOnClickListener {}
     }
 
     private fun navigateToPriceFragment() {

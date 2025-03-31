@@ -108,7 +108,6 @@ class MainActivity: AppCompatActivity() {
         val iDao = inject<IngredientDao>()
 
         lifecycleScope.launch {
-
             listOf(
                 ProductItem(Random.nextLong(), "Bala Brigadeiro", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),
                 ProductItem(Random.nextLong(), "Bala Morango", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),

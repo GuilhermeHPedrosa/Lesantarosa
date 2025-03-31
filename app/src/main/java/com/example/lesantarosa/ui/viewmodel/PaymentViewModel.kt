@@ -1,10 +1,12 @@
 package com.example.lesantarosa.ui.viewmodel
 
+import androidx.lifecycle.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.lesantarosa.models.data.Payment
 import com.example.lesantarosa.models.enums.PaymentMethod
+import com.example.lesantarosa.models.enums.PaymentMethod.CASH
 
 class PaymentViewModel(
     private val finalPaymentPrice: Double
@@ -13,16 +15,14 @@ class PaymentViewModel(
     private val _payments = MutableLiveData<List<Payment>>()
     val payments: LiveData<List<Payment>> = _payments
 
-    private var _paymentMethod: PaymentMethod? = null
-    val paymentMethod: PaymentMethod
-        get() = _paymentMethod ?: throw IllegalArgumentException("")
+    private var _paymentMethod: PaymentMethod = CASH
 
     val totalRemainingPrice: Double
-        get() = (finalPaymentPrice - (_payments.value?.sumOf { it.totalPrice } ?: 0.0))
+        get() = finalPaymentPrice - (_payments.value?.sumOf { it.totalPrice } ?: 0.0)
 
-    fun savePayment(payment: Payment) {
+    fun savePayment(price: Double) {
         val currentPayments = (_payments.value ?: emptyList()).toMutableList()
-        currentPayments.add(payment)
+        currentPayments.add(Payment(_paymentMethod, price))
 
         _payments.postValue(currentPayments)
     }
@@ -34,7 +34,7 @@ class PaymentViewModel(
         _payments.postValue(currentPayments)
     }
 
-    fun alterPaymentMethod(method: PaymentMethod?) {
+    fun alterPaymentMethod(method: PaymentMethod) {
         _paymentMethod = method
     }
 }
