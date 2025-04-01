@@ -1,40 +1,39 @@
 package com.example.lesantarosa.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.lesantarosa.database.preferences.PaymentPreferences
+import com.example.lesantarosa.models.data.CartProduct
 import com.example.lesantarosa.models.data.Payment
 import com.example.lesantarosa.models.enums.PaymentMethod
 import com.example.lesantarosa.models.enums.PaymentMethod.CASH
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-class PaymentViewModel(
-    private val finalPaymentPrice: Double
-): ViewModel() {
+class PaymentViewModel(private val finalPaymentPrice: Double): ViewModel() {
 
-    private val _payments = MutableLiveData<List<Payment>>()
-    val payments: LiveData<List<Payment>> = _payments
-
-    private var _paymentMethod: PaymentMethod = CASH
+    private var paymentMethod: PaymentMethod = CASH
 
     val totalRemainingPrice: Double
-        get() = finalPaymentPrice - (_payments.value?.sumOf { it.totalPrice } ?: 0.0)
+        get() = finalPaymentPrice - PaymentPreferences.totalPaidPrice
 
-    fun savePayment(price: Double) {
-        val currentPayments = (_payments.value ?: emptyList()).toMutableList()
-        currentPayments.add(Payment(_paymentMethod, price))
-
-        _payments.postValue(currentPayments)
+    fun savePayment(context: Context, price: Double) {
+        viewModelScope.launch {
+            val payment = Payment(paymentMethod, price)
+            PaymentPreferences.addPayment(context, payment)
+        }
     }
 
-    fun removePayment(payment: Payment) {
-        val currentPayments = (_payments.value ?: emptyList()).toMutableList()
-        currentPayments.remove(payment)
-
-        _payments.postValue(currentPayments)
+    fun removePayment(context: Context, payment: Payment) {
+        viewModelScope.launch {
+            PaymentPreferences.removePayment(context, payment)
+        }
     }
 
     fun alterPaymentMethod(method: PaymentMethod) {
-        _paymentMethod = method
+        paymentMethod = method
     }
 }

@@ -31,7 +31,7 @@ interface CartDao {
         if (save(cartItem) == -1L) { update(cartItem.itemId, cartItem.quantity) }
     }
 
-    @Query("SELECT i.itemId, i.title, i.description, i.image, i.price, i.createdAt, i.updatedAt, p.discountPrice, p.salesCount, c.quantity FROM cart c INNER JOIN product p ON c.itemId = p.itemId INNER JOIN item i ON p.itemId = i.itemId")
+    @Query("SELECT i.title, i.image, i.price, c.quantity, c.discountedPrice, c.note FROM cart c INNER JOIN item i ON c.itemId = i.itemId")
     fun getCartProducts(): LiveData<List<CartProduct>>
 
     @Query("""

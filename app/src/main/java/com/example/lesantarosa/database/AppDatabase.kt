@@ -20,7 +20,7 @@ import com.example.lesantarosa.models.entities.Product
 import com.example.lesantarosa.models.entities.Recipe
 import com.example.lesantarosa.models.entities.Stock
 
-@Database(entities = [Item::class, Product::class, Recipe::class, Ingredient::class, Stock::class, Category::class, CartItem::class], version = 158)
+@Database(entities = [Item::class, Product::class, Recipe::class, Ingredient::class, Stock::class, Category::class, CartItem::class], version = 159)
 @TypeConverters(ItemTypeConverter::class, MeasureUnitTypeConverter::class, DifficultyConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

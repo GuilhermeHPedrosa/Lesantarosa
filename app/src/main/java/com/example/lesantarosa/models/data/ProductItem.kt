@@ -13,13 +13,12 @@ class ProductItem(
     updatedAt: Long?,
     val weight: Int?,
     val packaging: String?,
-    val discountPrice: Double?,
     val salesCount: Int,
 ): Item(itemId, title, description, image, price, expirationDate, createdAt, updatedAt) {
 
     companion object {
 
-        fun createProduct(item: Item, weight: Int?, packaging: String?, discountPrice: Double?, salesCount: Int): ProductItem {
+        fun createProduct(item: Item, weight: Int?, packaging: String?, salesCount: Int): ProductItem {
             return ProductItem(
                 item.itemId,
                 item.title,
@@ -31,7 +30,6 @@ class ProductItem(
                 item.updatedAt,
                 weight,
                 packaging,
-                discountPrice,
                 salesCount,
             )
         }

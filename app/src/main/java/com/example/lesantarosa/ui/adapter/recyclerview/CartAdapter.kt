@@ -9,26 +9,24 @@ import com.example.lesantarosa.models.data.ProductItem
 
 class CartAdapter(
     private val context: Context,
-    var setItemClick: (itemId: Long) -> Unit = {}
+    var setItemClick: () -> Unit = {}
 ): ListAdapter<CartProduct>() {
 
     inner class ViewHolder(private val binding: CardItemBinding): ListViewHolder<CartProduct>(binding.root) {
 
-        private lateinit var productItem: ProductItem
+        private lateinit var cartProduct: CartProduct
 
         init {
             itemView.setOnClickListener {
-                if(::productItem.isInitialized) {
-                    setItemClick(productItem.itemId)
-                }
+                if(::cartProduct.isInitialized) { setItemClick() }
             }
         }
 
         override fun setViewInfo(value: CartProduct) {
-            this.productItem = value.productItem
+            this.cartProduct = value
 
             val title = binding.itemTitle
-            title.text = productItem.title
+            title.text = cartProduct.title
         }
     }
 

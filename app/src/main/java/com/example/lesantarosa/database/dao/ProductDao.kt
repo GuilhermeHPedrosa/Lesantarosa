@@ -50,7 +50,7 @@ interface ProductDao: ItemDao {
         val product = getProductByItemId(itemId)
 
         return if(item != null && product != null) {
-            ProductItem.createProduct(item, product.weight, product.packaging, product.discountPrice, product.salesCount)
+            ProductItem.createProduct(item, product.weight, product.packaging, product.salesCount)
         } else null
     }
 

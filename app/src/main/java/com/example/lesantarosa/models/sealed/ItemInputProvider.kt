@@ -40,21 +40,19 @@ sealed class ItemInputProvider(item: Item?) {
         init {
             val productItem = item as? ProductItem
             itemInputs.addAll(listOf(
-                CustomInput("Weight", "Invalid Weight", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, productItem?.discountPrice?.toString()),
-                CustomInput("Packaging", "Invalid Packaging", Regex("^[A-Za-z]+\$"), InputType.TYPE_CLASS_TEXT, productItem?.salesCount?.toString()),
-                CustomInput("Discount Price", "Invalid Price", Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, productItem?.discountPrice?.toString()),
+                CustomInput("Weight", "Invalid Weight", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, productItem?.weight?.toString()),
+                CustomInput("Packaging", "Invalid Packaging", Regex("^[A-Za-z]+\$"), InputType.TYPE_CLASS_TEXT, productItem?.packaging),
                 CustomInput("Sales Count", "Invalid Quantity", Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, productItem?.salesCount?.toString())
             ))
         }
 
         override fun createItem(): Item {
             val item = createRawItem(Random.nextLong())
-            val weight = itemInputs[0].getInputValue().toInt()
-            val packaging = itemInputs[1].getInputValue()
-            val discountPrice = itemInputs[2].getInputValue().toDouble()
-            val salesCount = itemInputs[3].getInputValue().toInt()
+            val weight = itemInputs[4].getInputValue().toInt()
+            val packaging = itemInputs[5].getInputValue()
+            val salesCount = itemInputs[6].getInputValue().toInt()
 
-            return ProductItem.createProduct(item, weight, packaging, discountPrice, salesCount)
+            return ProductItem.createProduct(item, weight, packaging, salesCount)
         }
     }
 
@@ -71,9 +69,9 @@ sealed class ItemInputProvider(item: Item?) {
 
         override fun createItem(): Item {
             val item = createRawItem(Random.nextLong())
-            val yield = itemInputs[0].getInputValue().toInt()
-            val servings = itemInputs[1].getInputValue().toInt()
-            val preparationTime = itemInputs[2].getInputValue().toInt()
+            val yield = itemInputs[4].getInputValue().toInt()
+            val servings = itemInputs[5].getInputValue().toInt()
+            val preparationTime = itemInputs[6].getInputValue().toInt()
 
             return RecipeItem.createRecipe(item, yield, servings, preparationTime, Difficulty.MEDIUM)
         }
@@ -92,9 +90,9 @@ sealed class ItemInputProvider(item: Item?) {
 
         override fun createItem(): Item {
             val item = createRawItem(Random.nextLong())
-            val brand = itemInputs[0].getInputValue()
-            val supplier = itemInputs[1].getInputValue()
-            val nutritionalInfo = itemInputs[2].getInputValue()
+            val brand = itemInputs[4].getInputValue()
+            val supplier = itemInputs[5].getInputValue()
+            val nutritionalInfo = itemInputs[6].getInputValue()
 
             return IngredientItem.createIngredient(item, brand, supplier, nutritionalInfo)
         }

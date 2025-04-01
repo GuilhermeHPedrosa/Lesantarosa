@@ -109,10 +109,10 @@ class MainActivity: AppCompatActivity() {
 
         lifecycleScope.launch {
             listOf(
-                ProductItem(Random.nextLong(), "Bala Brigadeiro", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),
-                ProductItem(Random.nextLong(), "Bala Morango", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),
-                ProductItem(Random.nextLong(), "Bala Ninho", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),
-                ProductItem(Random.nextLong(), "Bala Laranja", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, null, 0),
+                ProductItem(Random.nextLong(), "Bala Brigadeiro", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, 0),
+                ProductItem(Random.nextLong(), "Bala Morango", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, 0),
+                ProductItem(Random.nextLong(), "Bala Ninho", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, 0),
+                ProductItem(Random.nextLong(), "Bala Laranja", "Delicia", "", 3.5, Date().time, Date().time, null, null, null, 0),
             ).forEach { pDao.value.save(it) }
 
             listOf(

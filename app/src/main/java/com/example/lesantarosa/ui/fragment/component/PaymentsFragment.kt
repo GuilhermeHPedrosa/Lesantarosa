@@ -2,7 +2,11 @@ package com.example.lesantarosa.ui.fragment.component
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import com.example.lesantarosa.database.preferences.CartPreferences
+import com.example.lesantarosa.database.preferences.PaymentPreferences
+import com.example.lesantarosa.models.data.CartProduct
 import com.example.lesantarosa.models.data.Payment
 import com.example.lesantarosa.ui.adapter.recyclerview.PaymentAdapter
 import com.example.lesantarosa.ui.fragment.page.PagePaymentFragmentDirections
@@ -14,7 +18,7 @@ class PaymentsFragment: ListFragment<Payment>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        updateSource(viewModel.payments)
+        updateSource(PaymentPreferences.getPayments(requireContext()).asLiveData())
     }
 
     override fun initializeRecyclerView() {
@@ -26,7 +30,7 @@ class PaymentsFragment: ListFragment<Payment>() {
         }
 
         adapter.setRemoveClick = {
-            viewModel.removePayment(it)
+            viewModel.removePayment(requireContext(), it)
         }
 
         this.adapter = adapter

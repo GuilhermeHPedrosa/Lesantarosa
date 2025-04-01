@@ -28,6 +28,5 @@ class Product(
     val itemId: Long,
     val weight: Int?,
     val packaging: String?,
-    val discountPrice: Double?,
     val salesCount: Int = 0
 )

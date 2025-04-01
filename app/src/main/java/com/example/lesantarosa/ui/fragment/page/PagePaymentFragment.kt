@@ -62,9 +62,6 @@ class PagePaymentFragment: PageFragment() {
 
         initializePaymentFragment()
 
-        setupFinalPaymentPrice()
-
-        observePayments()
         observePaymentSelectionResult()
 
         handleShowPaymentMethodsButton()
@@ -80,26 +77,10 @@ class PagePaymentFragment: PageFragment() {
             .commit()
     }
 
-    private fun setupFinalPaymentPrice() {
-        val finalPaymentPriceTextView = binding.finalPaymentPriceTextview
-        finalPaymentPriceTextView.text = finalPaymentPrice.formatPrice()
-    }
-
-    private fun setupTotalRemainingPrice() {
-        val totalRemainingPriceTextview = binding.totalRemainingPriceTextview
-        totalRemainingPriceTextview.text = viewModel.totalRemainingPrice.formatPrice()
-    }
-
     private fun observePaymentSelectionResult() {
         setFragmentResultListener(PRICE_REQUEST_KEY) { _, bundle ->
             val selectedPrice: Double = bundle.getDouble(PRICE_VALUE_KEY)
-            viewModel.savePayment(selectedPrice)
-        }
-    }
-
-    private fun observePayments() {
-        viewModel.payments.observe(viewLifecycleOwner) {
-            setupTotalRemainingPrice()
+            viewModel.savePayment(requireContext(), selectedPrice)
         }
     }
 
