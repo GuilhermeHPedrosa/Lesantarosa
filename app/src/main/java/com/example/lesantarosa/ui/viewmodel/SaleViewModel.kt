@@ -20,7 +20,7 @@ class SaleViewModel(
 
     fun addToCart(productItem: ProductItem) {
         viewModelScope.launch {
-            cartRepository.addToCart(createCartEntity(productItem))
+            cartRepository.addOrUpdate(createCartEntity(productItem))
             selectedSaleQuantity = 1
         }
     }

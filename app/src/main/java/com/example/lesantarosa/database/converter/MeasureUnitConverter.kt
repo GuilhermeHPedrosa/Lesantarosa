@@ -3,11 +3,11 @@ package com.example.lesantarosa.database.converter
 import androidx.room.TypeConverter
 import com.example.lesantarosa.models.enums.MeasureUnit
 
-class MeasureUnitTypeConverter {
+class MeasureUnitConverter {
 
     @TypeConverter
-    fun fromMeasureUnit(unit: MeasureUnit): String {
-        return unit.name
+    fun fromMeasureUnit(value: MeasureUnit): String {
+        return value.name
     }
 
     @TypeConverter

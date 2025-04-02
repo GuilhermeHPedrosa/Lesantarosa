@@ -50,7 +50,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <Button
-                android:id="@+id/finish_order_button"
+                android:id="@+id/checkout_button"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"

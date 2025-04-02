@@ -56,6 +56,8 @@ class MainActivity: AppCompatActivity() {
         setupDrawerNavigationListener()
 
         observeVisualComponents()
+
+        refreshRepositories()
     }
 
     private fun setupNavigation() {

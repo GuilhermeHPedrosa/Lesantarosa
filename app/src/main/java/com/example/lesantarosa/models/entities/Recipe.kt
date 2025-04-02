@@ -4,6 +4,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.lesantarosa.database.converter.DifficultyConverter
 import com.example.lesantarosa.models.enums.Difficulty
 
 @Entity(
@@ -23,6 +25,7 @@ import com.example.lesantarosa.models.enums.Difficulty
         )
     ]
 )
+@TypeConverters(DifficultyConverter::class)
 class Recipe(
     @PrimaryKey(autoGenerate = true)
     val recipeId: Long = 0L,

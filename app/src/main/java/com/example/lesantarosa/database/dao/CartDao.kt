@@ -20,6 +20,11 @@ interface CartDao {
     @Query("UPDATE cart SET quantity = quantity + :quantity WHERE itemId = :itemId")
     suspend fun update(itemId: Long, quantity: Int)
 
+    @Transaction
+    suspend fun addOrUpdate(cartItem: CartItem) {
+        if (save(cartItem) == -1L) { update(cartItem.itemId, cartItem.quantity) }
+    }
+
     @Query("DELETE FROM cart WHERE itemId = :itemId")
     suspend fun remove(itemId: Long)
 
@@ -27,9 +32,14 @@ interface CartDao {
     suspend fun removeAll()
 
     @Transaction
-    suspend fun addOrUpdate(cartItem: CartItem) {
-        if (save(cartItem) == -1L) { update(cartItem.itemId, cartItem.quantity) }
+    suspend fun finalizeOrder(): List<CartProduct> {
+        val cartProducts = getCurrentCartProducts()
+        removeAll()
+        return cartProducts
     }
+
+    @Query("SELECT i.title, i.image, i.price, c.quantity, c.discountedPrice, c.note FROM cart c INNER JOIN item i ON c.itemId = i.itemId")
+    suspend fun getCurrentCartProducts(): List<CartProduct>
 
     @Query("SELECT i.title, i.image, i.price, c.quantity, c.discountedPrice, c.note FROM cart c INNER JOIN item i ON c.itemId = i.itemId")
     fun getCartProducts(): LiveData<List<CartProduct>>

@@ -18,7 +18,9 @@ class PaymentsFragment: ListFragment<Payment>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        updateSource(PaymentPreferences.getPayments(requireContext()).asLiveData())
+
+        val payments = PaymentPreferences.getPayments(requireContext()).asLiveData()
+        updateSource(payments)
     }
 
     override fun initializeRecyclerView() {

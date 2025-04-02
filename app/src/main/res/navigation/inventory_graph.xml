@@ -6,6 +6,8 @@
     android:id="@+id/inventory_graph"
     app:startDestination="@id/fragment_page_inventory">
 
+    <!-- ===================== Pages ===================== -->
+
     <fragment
         android:id="@+id/fragment_page_inventory"
         android:name="com.example.lesantarosa.ui.fragment.page.PageInventoryFragment"
@@ -38,6 +40,8 @@
             android:name="initialPosition"
             app:argType="integer"/>
     </fragment>
+
+    <!-- ===================== Dialog ===================== -->
 
     <fragment
         android:id="@+id/dialog_category"

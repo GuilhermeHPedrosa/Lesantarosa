@@ -12,7 +12,10 @@ import com.example.lesantarosa.database.utils.FragmentKeys.CATEGORY_ID_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.CATEGORY_REQUEST_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.CATEGORY_TITLE_KEY
 import com.example.lesantarosa.databinding.DialogCategoryBinding
+import com.example.lesantarosa.models.data.VisualComponents
+import com.example.lesantarosa.ui.viewmodel.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class CategoryBottomSheetDialogFragment: BottomSheetDialogFragment() {
 

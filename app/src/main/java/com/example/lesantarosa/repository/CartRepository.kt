@@ -14,6 +14,10 @@ class CartRepository(
     private val cartDao: CartDao
 ) {
 
+    suspend fun addOrUpdate(cartItem: CartItem) {
+        cartDao.addOrUpdate(cartItem)
+    }
+
     suspend fun remove(itemId: Long) {
         cartDao.remove(itemId)
     }
@@ -22,8 +26,8 @@ class CartRepository(
         cartDao.removeAll()
     }
 
-    suspend fun addToCart(cartItem: CartItem) {
-        cartDao.addOrUpdate(cartItem)
+    suspend fun finalizeOrder(): List<CartProduct> {
+        return cartDao.finalizeOrder()
     }
 
     fun getCartProducts(): LiveData<List<CartProduct>> {

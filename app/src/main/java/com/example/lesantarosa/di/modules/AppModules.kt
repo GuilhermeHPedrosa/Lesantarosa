@@ -6,6 +6,7 @@ import com.example.lesantarosa.database.dao.CartDao
 import com.example.lesantarosa.database.dao.CategoryDao
 import com.example.lesantarosa.database.dao.IngredientDao
 import com.example.lesantarosa.database.dao.ItemDao
+import com.example.lesantarosa.database.dao.OrderDao
 import com.example.lesantarosa.database.dao.ProductDao
 import com.example.lesantarosa.database.dao.RecipeDao
 import com.example.lesantarosa.database.dao.StockDao
@@ -14,17 +15,21 @@ import com.example.lesantarosa.models.enums.ItemType
 import com.example.lesantarosa.repository.CartRepository
 import com.example.lesantarosa.repository.CategoryRepository
 import com.example.lesantarosa.repository.ItemRepository
+import com.example.lesantarosa.repository.OrderRepository
 import com.example.lesantarosa.repository.StockRepository
 import com.example.lesantarosa.retrofit.service.CategoryService
 import com.example.lesantarosa.retrofit.service.IngredientService
 import com.example.lesantarosa.retrofit.service.ItemService
+import com.example.lesantarosa.retrofit.service.OrderService
 import com.example.lesantarosa.retrofit.service.ProductService
 import com.example.lesantarosa.retrofit.service.RecipeService
 import com.example.lesantarosa.retrofit.service.StockService
 import com.example.lesantarosa.retrofit.webclient.CategoryWebClient
 import com.example.lesantarosa.retrofit.webclient.ItemWebClient
+import com.example.lesantarosa.retrofit.webclient.OrderWebClient
 import com.example.lesantarosa.retrofit.webclient.StockWebClient
 import com.example.lesantarosa.ui.viewmodel.CartViewModel
+import com.example.lesantarosa.ui.viewmodel.CheckoutViewModel
 import com.example.lesantarosa.ui.viewmodel.InventoryViewModel
 import com.example.lesantarosa.ui.viewmodel.MainViewModel
 import com.example.lesantarosa.ui.viewmodel.ManagementViewModel
@@ -69,6 +74,8 @@ val appModules = module {
     single<CategoryDao> { get<AppDatabase>().categoryDao() }
 
     single<CartDao> { get<AppDatabase>().cartDao() }
+
+    single<OrderDao> { get<AppDatabase>().orderDao() }
 
     // ===================== Services =====================
 
@@ -117,6 +124,10 @@ val appModules = module {
         get<Retrofit>().create(CategoryService::class.java)
     }
 
+    single<OrderService> {
+        get<Retrofit>().create(OrderService::class.java)
+    }
+
     // ===================== Web Clients =====================
 
     single<ItemWebClient> { (itemType: ItemType) ->
@@ -129,6 +140,10 @@ val appModules = module {
 
     single<CategoryWebClient> {
         CategoryWebClient(get<CategoryService>())
+    }
+
+    single<OrderWebClient> {
+        OrderWebClient(get<OrderService>())
     }
 
     // ===================== Repositories =====================
@@ -145,6 +160,8 @@ val appModules = module {
     single<CategoryRepository> { CategoryRepository(get<CategoryDao>(), get<CategoryWebClient>()) }
 
     single<CartRepository> { CartRepository(get<ProductDao>(), get<CartDao>()) }
+
+    single<OrderRepository> { OrderRepository(get<OrderDao>(), get<OrderWebClient>()) }
 
     // ===================== ViewModels =====================
 
@@ -178,5 +195,9 @@ val appModules = module {
 
     viewModel<PaymentViewModel> { (finalPaymentPrice: Double) ->
         PaymentViewModel(finalPaymentPrice)
+    }
+
+    viewModel<CheckoutViewModel> {
+        CheckoutViewModel(get<CartRepository>(), get<OrderRepository>())
     }
 }

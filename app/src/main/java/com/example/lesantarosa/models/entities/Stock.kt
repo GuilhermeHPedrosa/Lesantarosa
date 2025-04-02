@@ -4,6 +4,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.lesantarosa.database.converter.MeasureUnitConverter
 import com.example.lesantarosa.models.enums.ItemType
 import com.example.lesantarosa.models.enums.MeasureUnit
 
@@ -24,6 +26,7 @@ import com.example.lesantarosa.models.enums.MeasureUnit
         )
     ]
 )
+@TypeConverters(MeasureUnitConverter::class)
 class Stock(
     @PrimaryKey(autoGenerate = true)
     val stockId: Long = 0L,

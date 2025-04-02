@@ -11,11 +11,9 @@ import com.example.lesantarosa.R
 import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_REQUEST_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_VALUE_KEY
 import com.example.lesantarosa.databinding.FragmentPagePaymentBinding
-import com.example.lesantarosa.models.data.Payment
 import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.bottomsheet.PaymentMethodsBottomSheetDialog
 import com.example.lesantarosa.ui.fragment.component.PaymentsFragment
-import com.example.lesantarosa.ui.fragment.formatPrice
 import com.example.lesantarosa.ui.viewmodel.PaymentViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -29,7 +27,7 @@ class PagePaymentFragment: PageFragment() {
     private val paymentMethodsDialog by lazy {
         PaymentMethodsBottomSheetDialog(requireContext()) {
             viewModel.alterPaymentMethod(it)
-            navigateToPriceFragment()
+            navigateToPriceDialog()
         }
     }
 
@@ -65,7 +63,7 @@ class PagePaymentFragment: PageFragment() {
         observePaymentSelectionResult()
 
         handleShowPaymentMethodsButton()
-        handleFinishOrderButton()
+        handleCheckoutButton()
     }
 
     private fun initializePaymentFragment() {
@@ -91,12 +89,15 @@ class PagePaymentFragment: PageFragment() {
         }
     }
 
-    private fun handleFinishOrderButton() {
-        val finishOrderButton = binding.finishOrderButton
-        finishOrderButton.setOnClickListener {}
+    private fun handleCheckoutButton() {
+        val checkoutButton = binding.checkoutButton
+        checkoutButton.setOnClickListener {
+            val direction = PagePaymentFragmentDirections.actionPagePaymentToPageCheckout()
+            findNavController().navigate(direction)
+        }
     }
 
-    private fun navigateToPriceFragment() {
+    private fun navigateToPriceDialog() {
         val direction = PagePaymentFragmentDirections.actionPagePaymentToPriceDialog(0f, viewModel.totalRemainingPrice.toFloat())
         findNavController().navigate(direction)
     }

@@ -6,6 +6,8 @@
     android:id="@+id/purchase_graph"
     app:startDestination="@id/fragment_page_sell">
 
+    <!-- ===================== Pages ===================== -->
+
     <fragment
         android:id="@+id/fragment_page_sell"
         android:name="com.example.lesantarosa.ui.fragment.page.PageSellFragment"
@@ -50,9 +52,20 @@
             app:argType="float"/>
 
         <action
+            android:id="@+id/action_pagePayment_to_pageCheckout"
+            app:destination="@id/fragment_page_checkout"/>
+
+        <action
             android:id="@+id/action_pagePayment_to_priceDialog"
             app:destination="@id/dialog_price"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_page_checkout"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageCheckoutFragment"
+        android:label="Checkout"/>
+
+    <!-- ===================== Dialog ===================== -->
 
     <fragment
         android:id="@+id/dialog_quantity"
