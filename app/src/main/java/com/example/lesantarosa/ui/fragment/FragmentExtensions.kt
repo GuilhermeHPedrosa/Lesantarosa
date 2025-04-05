@@ -11,8 +11,6 @@ import com.example.lesantarosa.models.data.SaleSummary
 fun Double.formatPrice() = "R$ $this"
 fun Int.formatStock() = "Stock: $this"
 
-fun SaleSummary.formatValues() = "$totalQuantity items -> ${totalPrice.formatPrice()}"
-
 fun ProductItem.formatEntity() = Product(0L, this.itemId, this.weight, this.packaging, this.salesCount)
 fun RecipeItem.formatEntity() = Recipe(0L, this.itemId, this.yield, this.servings, this.preparationTime, this.difficulty)
 fun IngredientItem.formatEntity() = Ingredient(0L, this.itemId, this.brand, this.supplier, this.nutritionalInfo)

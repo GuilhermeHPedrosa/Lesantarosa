@@ -5,8 +5,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.lesantarosa.models.entities.Item
+import com.example.lesantarosa.models.data.OrdersSummary
 import com.example.lesantarosa.models.entities.Order
+import com.example.lesantarosa.models.enums.OrderStatus
 
 @Dao
 interface OrderDao {
@@ -18,9 +19,12 @@ interface OrderDao {
     suspend fun remove(orderId: Long)
 
     @Query("SELECT * FROM `order` WHERE orderId == :orderId")
-    suspend fun geOrderById(orderId: Long): Order?
+    suspend fun getOrderById(orderId: Long): Order?
 
-    @Query("SELECT * FROM `order` WHERE title LIKE '%' || :search || '%'")
-    fun searchOrders(search: String): LiveData<List<Order>>
+    @Query("SELECT * FROM `order` WHERE (:status IS NULL OR orderStatus = :status) AND title LIKE '%' || :search || '%' ORDER BY createdAt DESC")
+    fun searchOrders(search: String, status: OrderStatus?): LiveData<List<Order>>
+
+    @Query("SELECT COUNT(*) as totalQuantity, SUM(finalAmount) as finalAmount FROM `order`")
+    fun getOrdersSummary(): LiveData<OrdersSummary>
 
 }

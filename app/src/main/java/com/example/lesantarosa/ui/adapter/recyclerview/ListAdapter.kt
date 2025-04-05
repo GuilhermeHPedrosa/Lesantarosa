@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class ListAdapter<T>: RecyclerView.Adapter<ListAdapter.ListViewHolder<T>>() {
 
     private val values = mutableListOf<T>()
+    protected val value: (Int) -> T get() = { index -> values[index] }
 
     abstract class ListViewHolder<T>(itemView: View): RecyclerView.ViewHolder(itemView) {
 

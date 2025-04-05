@@ -13,7 +13,7 @@ class ManagementPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment)
         return when(position) {
             0 -> CreationFragment()
             1 -> StockFragment()
-            else -> throw Exception("Invalid Position")
+            else -> throw IllegalArgumentException("Invalid Position")
         }
     }
 }

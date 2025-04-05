@@ -33,6 +33,7 @@ import com.example.lesantarosa.ui.viewmodel.CheckoutViewModel
 import com.example.lesantarosa.ui.viewmodel.InventoryViewModel
 import com.example.lesantarosa.ui.viewmodel.MainViewModel
 import com.example.lesantarosa.ui.viewmodel.ManagementViewModel
+import com.example.lesantarosa.ui.viewmodel.OrderViewModel
 import com.example.lesantarosa.ui.viewmodel.PaymentViewModel
 import com.example.lesantarosa.ui.viewmodel.SaleViewModel
 import okhttp3.OkHttpClient
@@ -199,5 +200,9 @@ val appModules = module {
 
     viewModel<CheckoutViewModel> {
         CheckoutViewModel(get<CartRepository>(), get<OrderRepository>())
+    }
+
+    viewModel<OrderViewModel> {
+        OrderViewModel(get<OrderRepository>())
     }
 }

@@ -2,6 +2,7 @@ package com.example.lesantarosa.ui.viewmodel
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lesantarosa.database.preferences.CartPreferences
@@ -25,7 +26,7 @@ class CheckoutViewModel(
         }
     }
 
-    fun finishOrder(context: Context, title: String, customerContact: String, deadline: Int) {
+    fun finishOrder(context: Context, title: String, customerContact: String, deadline: Int, onSuccess: () -> Unit) {
         viewModelScope.launch {
             val cartProducts = cartRepository.finalizeOrder()
 
@@ -40,7 +41,8 @@ class CheckoutViewModel(
             val order = Order(0L, title, cartProducts, totalAmount, discountAmount, finalAmount, totalItems, note, payments, deadline, customerContact)
 
             val resource = orderRepository.save(order)
-            resource.error.takeIf { it != null }?.let { throw Exception(it) } ?: clearPurchase(context)
+            resource.error.takeIf { it != null }?.let { throw Exception(it) }
+                ?: let { clearPurchase(context) ; onSuccess() }
         }
     }
 }

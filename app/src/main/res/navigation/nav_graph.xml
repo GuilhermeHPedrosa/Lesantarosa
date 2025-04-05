@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/fragment_page_orders"
-        android:name="com.example.lesantarosa.ui.fragment.page.PageHomeFragment"
+        android:name="com.example.lesantarosa.ui.fragment.page.PageOrderFragment"
         android:label="Orders"/>
 
     <include app:graph="@navigation/inventory_graph"/>

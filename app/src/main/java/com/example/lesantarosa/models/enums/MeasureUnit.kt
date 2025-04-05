@@ -1,7 +1,6 @@
 package com.example.lesantarosa.models.enums
 
 enum class MeasureUnit(private val symbol: String) {
-
     GRAM("g"),
     KILOGRAM("kg"),
     LITER("L"),

@@ -1,5 +1,6 @@
 package com.example.lesantarosa.ui.fragment.component
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -9,21 +10,29 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.lesantarosa.R
 import com.example.lesantarosa.databinding.InputSearchBinding
+import com.google.android.material.textfield.TextInputLayout
 
 class SearchFragment: Fragment() {
 
     private lateinit var binding: InputSearchBinding
 
+    private val inputLayout by lazy { binding.searchInputLayout }
+    private val inputEditText by lazy { binding.searchEditText }
+
     private val _actualSearch = MutableLiveData("")
     val actualSearch: LiveData<String?> get() = _actualSearch
 
-    private var icon: Drawable? = null
-    private var position: Int? = null
-    private var onIconClick: () -> Unit = {}
+    var onClearListener: () -> Unit = {}
+
+    var icon: Int? = null
+    var onEndIconClick: () -> Unit = {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,14 +46,13 @@ class SearchFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        configInputLayout()
-        configIconButton()
+        configTextChangedListener()
+        configOnFocusChangedListener()
+
+        configEndIconButton()
     }
 
-    private fun configInputLayout() {
-        val inputLayout = binding.searchInputLayout
-        val inputEditText = binding.searchEditText
-
+    private fun configTextChangedListener() {
         val handler = Handler(Looper.getMainLooper())
         var runnable: Runnable? = null
 
@@ -65,28 +73,34 @@ class SearchFragment: Fragment() {
         })
     }
 
-    private fun configIconButton() {
-        val inputLayout = binding.searchInputLayout
-
-        when (position) {
-            0 -> {
-                inputLayout.startIconDrawable = icon
-                inputLayout.setStartIconOnClickListener { onIconClick() }
-            }
-            1 -> {
-                inputLayout.endIconDrawable = icon
-                inputLayout.setEndIconOnClickListener { onIconClick() }
+    private fun configOnFocusChangedListener() {
+        inputEditText.setOnFocusChangeListener { _, focused ->
+            if (focused) {
+                inputLayout.setStartIconOnClickListener { clear() }
+                inputLayout.startIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
+            } else {
+                inputLayout.setStartIconOnClickListener {}
+                inputLayout.startIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_bloom)
             }
         }
     }
 
-    fun setupIconValues(icon: Drawable?, position: Int = 0, onIconClick: () -> Unit) {
-        this.icon = icon
-        this.position = position
-        this.onIconClick = onIconClick
+    private fun configEndIconButton() {
+        val icon = icon ?: return
+
+        inputLayout.setEndIconDrawable(icon)
+        inputLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+
+        inputLayout.setEndIconOnClickListener { onEndIconClick() }
     }
 
-    fun clear() {
-        binding.searchEditText.text = null
+    private fun clear() {
+        inputEditText.text = null
+        inputEditText.clearFocus()
+
+        val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(inputEditText.windowToken, 0)
+
+        onClearListener()
     }
 }

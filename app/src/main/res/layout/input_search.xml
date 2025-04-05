@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:hintEnabled="false"
-    app:startIconDrawable="@drawable/ic_search"
-    app:endIconMode="custom"
+    app:startIconDrawable="@drawable/ic_bloom"
     style="@style/searchInputLayout">
 
     <com.google.android.material.textfield.TextInputEditText

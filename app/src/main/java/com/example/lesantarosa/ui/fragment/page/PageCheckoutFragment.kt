@@ -54,7 +54,7 @@ class PageCheckoutFragment: PageFragment() {
 
         setupCheckoutInputs()
 
-        handleFinishOrderButton()
+        handleCheckoutButton()
     }
 
     private fun setupCheckoutInputs() {
@@ -65,16 +65,17 @@ class PageCheckoutFragment: PageFragment() {
         }
     }
 
-    private fun handleFinishOrderButton() {
-        val finishOrderButton = binding.finishOrderButton
-        finishOrderButton.setOnClickListener {
+    private fun handleCheckoutButton() {
+        val checkoutButton = binding.checkoutButton
+        checkoutButton.setOnClickListener {
             try {
                 val title = checkoutInputs[0].getInputValue()
-                val customerContact = checkoutInputs[1].getInputValue()
+                //val customerContact = checkoutInputs[1].getInputValue()
                 val deadline = checkoutInputs[2].getInputValue().toInt()
 
-                viewModel.finishOrder(requireContext(), title, customerContact, deadline)
-                findNavController().popBackStack(R.id.fragment_page_sell, false)
+                viewModel.finishOrder(requireContext(), title, "82 99223510", deadline) {
+                    findNavController().popBackStack(R.id.fragment_page_sell, false)
+                }
 
             } catch (e: Exception) {
                 Log.i("", e.message.toString())

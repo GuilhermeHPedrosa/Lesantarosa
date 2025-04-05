@@ -16,7 +16,7 @@ class StockCatalogFragment: ListFragment<Stock>() {
 
     override fun initializeFilterFragment() {
         val searchFragment = SearchFragment()
-            .also { setupSearchIcon(it) ; observeSearchUpdates(it) }
+            .also { setupSearchEndIcon(it) ; observeSearchUpdates(it) }
 
         this.filterFragment = searchFragment
     }
@@ -28,12 +28,9 @@ class StockCatalogFragment: ListFragment<Stock>() {
         this.adapter = adapter
     }
 
-    private fun setupSearchIcon(filterFragment: SearchFragment) {
-        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_add)?.let { icon ->
-            filterFragment.setupIconValues(icon, 1) {
-                navigateToManagement(-1L)
-            }
-        }
+    private fun setupSearchEndIcon(searchFragment: SearchFragment) {
+        searchFragment.icon = R.drawable.ic_add
+        searchFragment.onEndIconClick = { navigateToManagement() }
     }
 
     private fun observeSearchUpdates(filterFragment: SearchFragment) {
@@ -42,7 +39,7 @@ class StockCatalogFragment: ListFragment<Stock>() {
         }
     }
 
-    private fun navigateToManagement(itemId: Long) {
+    private fun navigateToManagement(itemId: Long = -1L) {
         val direction = PageInventoryFragmentDirections.actionPageInventoryToPageManagement(itemId, itemType, 1)
         findNavController().navigate(direction)
     }

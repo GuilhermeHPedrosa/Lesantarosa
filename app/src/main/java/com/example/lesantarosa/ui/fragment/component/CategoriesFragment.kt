@@ -29,7 +29,7 @@ class CategoriesFragment: ListFragment<Category>() {
 
     override fun initializeFilterFragment() {
         val searchFragment = SearchFragment()
-            .also { setupSearchIcon(it) ; observeSearchUpdates(it) }
+            .also { setupSearchEndIcon(it) ; observeSearchUpdates(it) }
 
         this.filterFragment = searchFragment
     }
@@ -43,16 +43,13 @@ class CategoriesFragment: ListFragment<Category>() {
         this.adapter = adapter
     }
 
-    private fun setupSearchIcon(filterFragment: SearchFragment) {
-        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_add)?.let {
-            filterFragment.setupIconValues(it, 1) {
-                navigateToCategoryDialog()
-            }
-        }
+    private fun setupSearchEndIcon(searchFragment: SearchFragment) {
+        searchFragment.icon = R.drawable.ic_add
+        searchFragment.onEndIconClick = { navigateToCategoryDialog() }
     }
 
-    private fun observeSearchUpdates(filterFragment: SearchFragment) {
-        filterFragment.actualSearch.observe(viewLifecycleOwner) { search ->
+    private fun observeSearchUpdates(searchFragment: SearchFragment) {
+        searchFragment.actualSearch.observe(viewLifecycleOwner) { search ->
             updateSource(viewModel.searchCategories(search))
         }
     }

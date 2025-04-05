@@ -7,4 +7,9 @@ data class CartProduct(
     val quantity: Int,
     val discountedPrice: Double?,
     val note: String?
-)
+) {
+
+    override fun toString(): String {
+        return "${quantity}x $title"
+    }
+}

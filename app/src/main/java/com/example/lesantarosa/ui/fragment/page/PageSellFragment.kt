@@ -12,7 +12,6 @@ import com.example.lesantarosa.database.utils.FragmentKeys.QUANTITY_VALUE_KEY
 import com.example.lesantarosa.databinding.FragmentPageSellBinding
 import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.component.ProductsForSaleFragment
-import com.example.lesantarosa.ui.fragment.formatValues
 import com.example.lesantarosa.ui.viewmodel.SaleViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -61,7 +60,7 @@ class PageSellFragment: PageFragment() {
 
     private fun observeSaleSummary() {
         viewModel.saleSummary.observe(viewLifecycleOwner) { saleSummary ->
-            binding.goToCartButton.text = saleSummary.formatValues()
+            binding.goToCartButton.text = saleSummary.toString()
         }
     }
 

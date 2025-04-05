@@ -10,16 +10,10 @@ class ProductsForSaleFragment: ListFragment<ProductItem>() {
     private val viewModel by viewModels<SaleViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun initializeFilterFragment() {
-        val filterFragment = FilterFragment()
+        val saleFilterFragment = SaleFilterFragment()
             .also { observeSearchUpdates(it) }
 
-        this.filterFragment = filterFragment
-    }
-
-    private fun observeSearchUpdates(filterFragment: FilterFragment) {
-        filterFragment.actualSearch.observe(viewLifecycleOwner) { search ->
-            updateSource(viewModel.searchProductsForSale(search))
-        }
+        this.filterFragment = saleFilterFragment
     }
 
     override fun initializeRecyclerView() {
@@ -29,5 +23,11 @@ class ProductsForSaleFragment: ListFragment<ProductItem>() {
         }
 
         this.adapter = adapter
+    }
+
+    private fun observeSearchUpdates(saleFilterFragment: SaleFilterFragment) {
+        saleFilterFragment.actualSearch.observe(viewLifecycleOwner) { search ->
+            updateSource(viewModel.searchProductsForSale(search))
+        }
     }
 }

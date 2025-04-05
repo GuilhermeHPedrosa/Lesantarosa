@@ -25,12 +25,12 @@ class Order(
     val totalAmount: Double,
     val discountAmount: Double,
     val finalAmount: Double,
-    val totalItems: Int,
+    val totalQuantity: Int,
     val note: String,
-    val payments: List<Payment>?,
+    val payments: List<Payment>,
     val deadline: Int,
     val customerContact: String,
-    val orderStatus: OrderStatus = OrderStatus.IN_PRODUCTION,
+    val orderStatus: OrderStatus = OrderStatus.PENDING,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

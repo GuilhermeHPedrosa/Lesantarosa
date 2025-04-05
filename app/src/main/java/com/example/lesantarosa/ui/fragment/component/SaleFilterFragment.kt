@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.example.lesantarosa.R
-import com.example.lesantarosa.databinding.CardFilterBinding
+import com.example.lesantarosa.databinding.CardSaleFilterBinding
 import com.example.lesantarosa.ui.fragment.page.PageSellFragmentDirections
 
-class FilterFragment: Fragment() {
+class SaleFilterFragment: Fragment() {
 
-    private lateinit var binding: CardFilterBinding
+    private lateinit var binding: CardSaleFilterBinding
 
     private val searchFragmentContainer by lazy { binding.filterSearchFragmentContainer }
     private val filterButtonLinearLayout by lazy { binding.filterButtonLinearLayout }
@@ -30,7 +30,7 @@ class FilterFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CardFilterBinding.inflate(layoutInflater)
+        binding = CardSaleFilterBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -38,7 +38,7 @@ class FilterFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupSearchFragment()
-        setupSearchFragmentIcon()
+        setupOnClearListener()
 
         handleSearchButton()
 
@@ -52,23 +52,11 @@ class FilterFragment: Fragment() {
             .commit()
     }
 
-    private fun setupSearchFragmentIcon() {
-        val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_close)
-        searchFragment.setupIconValues(drawable) { handleClearSearch() }
-    }
-
-    private fun handleClearSearch() {
-        searchFragmentContainer.apply {
-            visibility = View.GONE
-
-            searchFragment.clear()
-            clearFocus()
-
-            val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(this.windowToken, 0)
+    private fun setupOnClearListener() {
+        searchFragment.onClearListener = {
+            searchFragmentContainer.visibility = View.GONE
+            filterButtonLinearLayout.visibility = View.VISIBLE
         }
-
-        filterButtonLinearLayout.visibility = View.VISIBLE
     }
 
     private fun handleSearchButton() {

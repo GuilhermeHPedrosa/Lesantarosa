@@ -25,6 +25,9 @@
     <string name="tab_management_manage">Manage</string>
     <string name="tab_management_stock">Stock</string>
 
+    <string name="tab_orders_pending">Pending</string>
+    <string name="tab_orders_finished">Finished</string>
+
     <!-- Dialogs -->
     <string name="dialog_options_button_to_note">Notes</string>
     <string name="dialog_options_button_to_discount">Discounts</string>
@@ -56,5 +59,12 @@
     <string name="item_title_hint">Title</string>
     <string name="item_price_hint">Price</string>
     <string name="item_description_hint">Description</string>
+
+    <string name="order_status_all">All Orders</string>
+    <string name="order_status_pending">Pending</string>
+    <string name="order_status_confirmed">Confirmed</string>
+    <string name="order_status_in_production">In Production</string>
+    <string name="order_status_out_for_delivery">Out for Delivery</string>
+    <string name="order_status_ready_for_pickup">Ready for Pickup</string>
 
 </resources>

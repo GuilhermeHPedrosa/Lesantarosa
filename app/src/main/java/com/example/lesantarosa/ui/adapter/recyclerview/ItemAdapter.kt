@@ -10,7 +10,7 @@ import com.example.lesantarosa.ui.fragment.formatPrice
 
 class ItemAdapter(
     private val context: Context,
-    var setItemClick: (item: Item) -> Unit = {}
+    var setItemClick: (itemId: Long) -> Unit = {}
 ): ListAdapter<Item>() {
 
     inner class ViewHolder(private val binding: CardItemBinding): ListViewHolder<Item>(binding.root) {
@@ -19,7 +19,7 @@ class ItemAdapter(
 
         init {
             itemView.setOnClickListener {
-                if (::item.isInitialized) { setItemClick(item) }
+                if (::item.isInitialized) { setItemClick(item.itemId) }
             }
         }
 
