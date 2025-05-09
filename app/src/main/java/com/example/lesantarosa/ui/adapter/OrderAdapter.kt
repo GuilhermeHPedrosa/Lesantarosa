@@ -1,9 +1,8 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.example.lesantarosa.databinding.CardOrderBinding
 import com.example.lesantarosa.databinding.CardOrderHeaderBinding
 import com.example.lesantarosa.models.entities.Order
@@ -48,9 +47,6 @@ class OrderAdapter(
             val finalAmount = binding.orderFinalAmount
             finalAmount.text = order.finalAmount.formatPrice()
 
-            val finalAmountIcon = ContextCompat.getDrawable(context, order.orderStatus.icon)
-            finalAmount.setCompoundDrawablesWithIntrinsicBounds(finalAmountIcon, null, null, null)
-
             val info = binding.orderInfo
             info.text = order.products.joinToString(", ") { it.toString() }
 
@@ -61,7 +57,7 @@ class OrderAdapter(
             val majorPayment = order.payments.maxBy { it.totalPrice }
 
             payment.text = majorPayment.totalPrice.formatPrice()
-            payment.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, majorPayment.paymentMethod.icon), null, null, null)
+            //payment.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, majorPayment.paymentMethod.getMethodDisplay(re)), null, null, null)
         }
     }
 

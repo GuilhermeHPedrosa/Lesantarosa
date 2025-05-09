@@ -2,6 +2,7 @@ package com.example.lesantarosa.ui.navigation
 
 import com.example.lesantarosa.R
 import com.example.lesantarosa.NavGraphDirections
+import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
 import com.example.lesantarosa.models.enums.ItemType.PRODUCT
 import com.example.lesantarosa.models.enums.ItemType.RECIPE
 import com.example.lesantarosa.models.enums.ItemType.INGREDIENT

@@ -16,18 +16,18 @@ class StockWebClient(private val service: StockService) {
         }
     }
 
-    suspend fun update(stock: Stock): Resource<Unit> {
+    suspend fun update(itemId: Long, newQuantity: Int): Resource<Unit> {
         return try {
-            val response = service.update(stock.stockId, stock)
+            val response = service.update(itemId, newQuantity)
             Resource(response)
         } catch (e: Exception) {
             Resource(null, e.message ?: UNKNOWN_ERROR)
         }
     }
 
-    suspend fun remove(stockId: Long): Resource<Unit> {
+    suspend fun remove(itemId: Long): Resource<Unit> {
         return try {
-            val response = service.remove(stockId)
+            val response = service.remove(itemId)
             Resource(response)
         } catch (e: Exception) {
             Resource(null, e.message ?: UNKNOWN_ERROR)

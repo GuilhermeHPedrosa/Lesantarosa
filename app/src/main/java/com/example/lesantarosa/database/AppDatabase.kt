@@ -24,8 +24,9 @@ import com.example.lesantarosa.models.entities.Order
 import com.example.lesantarosa.models.entities.Product
 import com.example.lesantarosa.models.entities.Recipe
 import com.example.lesantarosa.models.entities.Stock
+import com.example.lesantarosa.models.entities.StockMovement
 
-@Database(entities = [Item::class, Product::class, Recipe::class, Ingredient::class, Stock::class, Category::class, CartItem::class, Order::class], version = 164)
+@Database(entities = [Item::class, Product::class, Recipe::class, Ingredient::class, Stock::class, StockMovement::class, Category::class, CartItem::class, Order::class], version = 172)
 @TypeConverters(ItemTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

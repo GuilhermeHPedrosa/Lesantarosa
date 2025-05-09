@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.lesantarosa.databinding.FragmentCartBinding
 import com.example.lesantarosa.models.data.CartSummary
-import com.example.lesantarosa.ui.adapter.recyclerview.CartAdapter
-import com.example.lesantarosa.ui.fragment.formatPrice
+import com.example.lesantarosa.ui.adapter.CartAdapter
 import com.example.lesantarosa.ui.viewmodel.CartViewModel
 
 class CartFragment: Fragment() {
@@ -55,14 +54,14 @@ class CartFragment: Fragment() {
     private fun setupSummaryInfo(summary: CartSummary) {
         val cartSummary = binding.cartSummary
 
-        val totalPrice = cartSummary.cartTotalPriceValue
-        totalPrice.text = summary.totalPrice.formatPrice()
+        val totalAmount = cartSummary.cartTotalAmountValue
+        totalAmount.text = summary.formattedTotalAmount
 
         val totalDiscounts = cartSummary.cartTotalDiscountsValue
-        totalDiscounts.text = summary.totalDiscounts.formatPrice()
+        totalDiscounts.text = summary.formattedDiscounts
 
         val finalPrice = cartSummary.cartFinalPriceValue
-        finalPrice.text = summary.finalPrice.formatPrice()
+        finalPrice.text = summary.formattedFinalPrice
     }
 
     private fun observeCartProducts() {

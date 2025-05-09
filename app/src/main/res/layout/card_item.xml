@@ -19,7 +19,7 @@
             android:layout_margin="12dp"
             android:scaleType="centerCrop"
             android:background="@color/grey"
-            app:shapeAppearanceOverlay="@style/cornersImageView"
+            app:shapeAppearanceOverlay="@style/defaultImageShape"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -40,20 +40,20 @@
             tools:text="@tools:sample/lorem/random"/>
 
         <TextView
-            android:id="@+id/item_category"
+            android:id="@+id/item_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toStartOf="@id/item_title"
             app:layout_constraintTop_toBottomOf="@id/item_title"
             app:layout_constraintBottom_toBottomOf="@id/item_image"
             tools:text="@tools:sample/lorem/random"/>
 
         <TextView
-            android:id="@+id/item_price"
+            android:id="@+id/item_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"

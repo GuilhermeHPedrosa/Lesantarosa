@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
+import com.example.lesantarosa.models.data.StockItem
 import com.example.lesantarosa.models.entities.Category
 import com.example.lesantarosa.models.entities.Item
 import com.example.lesantarosa.models.entities.Stock
@@ -30,7 +31,7 @@ class InventoryViewModel(
         return itemRepository.searchItems(search ?: "")
     }
 
-    fun searchStocks(search: String?): LiveData<List<Stock>> {
+    fun searchStocks(search: String?): LiveData<List<StockItem>> {
         return stockRepository.searchStocks(search ?: "", itemType)
     }
 

@@ -12,14 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lesantarosa.database.preferences.CartPreferences
 import com.example.lesantarosa.databinding.DialogDiscountBinding
-import com.example.lesantarosa.models.data.VisualComponents
-import com.example.lesantarosa.ui.adapter.textwatcher.PercentTextWatcher
-import com.example.lesantarosa.ui.adapter.textwatcher.PriceTextWatcher
+import com.example.lesantarosa.ui.watcher.PercentTextWatcher
+import com.example.lesantarosa.ui.watcher.PriceTextWatcher
 import com.example.lesantarosa.ui.fragment.formatPrice
-import com.example.lesantarosa.ui.viewmodel.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class DiscountBottomSheetDialogFragment: BottomSheetDialogFragment() {
 

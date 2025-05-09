@@ -12,8 +12,11 @@ class ItemRepository(
 
     suspend fun save(item: Item): Resource<Unit> {
         return try {
-            webClient.save(item)
-                .also { if (it.error == null) { itemDao.save(item) } }
+//            webClient.save(item)
+//                .also { if (it.error == null) { itemDao.save(item) } }
+
+            itemDao.save(item)
+            Resource(null)
 
         } catch (e: Exception) {
             Resource(null, e.message)
@@ -22,8 +25,11 @@ class ItemRepository(
 
     suspend fun remove(itemId: Long): Resource<Unit> {
         return try {
-            webClient.remove(itemId)
-                .also { if (it.error == null) { itemDao.remove(itemId) } }
+//            webClient.remove(itemId)
+//                .also { if (it.error == null) { itemDao.remove(itemId) } }
+
+            itemDao.remove(itemId)
+            Resource(null)
 
         } catch (e: Exception) {
             Resource(null, e.message)

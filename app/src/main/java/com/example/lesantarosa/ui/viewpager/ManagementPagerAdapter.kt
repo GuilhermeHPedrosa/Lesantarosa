@@ -1,4 +1,4 @@
-package com.example.lesantarosa.ui.adapter.viewpager
+package com.example.lesantarosa.ui.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lesantarosa.R
 import com.example.lesantarosa.database.utils.ItemTypeManager.defineItemType
 import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
 import com.example.lesantarosa.databinding.FragmentDefaultPagerBinding
-import com.example.lesantarosa.models.data.VisualComponents
-import com.example.lesantarosa.ui.adapter.viewpager.ManagementPagerAdapter
+import com.example.lesantarosa.ui.viewpager.ManagementPagerAdapter
 import com.example.lesantarosa.ui.viewmodel.ManagementViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -35,20 +35,17 @@ class PageManagementFragment: PageFragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when(menuItem.itemId) {
-            R.id.menu_share -> { shareItem() ; true }
-            R.id.menu_remove -> { removeItem() ; true}
+            R.id.menu_remove -> { removeItem() ; true }
             else -> false
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mainViewModel.defineVisualComponents(VisualComponents(tabLayout = true))
-
         defineItemType(args.itemType)
 
-        viewModel = getViewModel<ManagementViewModel> { parametersOf(args.itemId, itemType) }
+        initializeViewModel()
+        initializeTabLayout()
     }
 
     override fun onCreateView(
@@ -69,6 +66,10 @@ class PageManagementFragment: PageFragment(), MenuProvider {
         setupTabLayout()
     }
 
+    private fun initializeViewModel() {
+        viewModel = getViewModel<ManagementViewModel> { parametersOf(args.itemId, itemType) }
+    }
+
     private fun initializeMenuProvider() {
         args.itemId.takeIf { it != -1L }?.let {
             activity?.addMenuProvider(this, viewLifecycleOwner)
@@ -82,23 +83,21 @@ class PageManagementFragment: PageFragment(), MenuProvider {
 
     private fun setupTabLayout() {
         val viewPager = binding.viewPagerContainer
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        viewPager.setCurrentItem(args.initialPosition, false)
+
+        TabLayoutMediator(tabLayout!!, viewPager) { tab, position ->
             tab.text = when(position) {
                 0 -> R.string.tab_management_manage
                 1 -> R.string.tab_management_stock
                 else -> throw Exception("Invalid Position")
-
             }.let { getString(it) }
         }.attach()
-
-        viewPager.setCurrentItem(args.initialPosition, false)
-    }
-
-    private fun shareItem() {
-        Toast.makeText(requireContext(), "Item Removido", Toast.LENGTH_SHORT).show()
     }
 
     private fun removeItem() {
-        Toast.makeText(requireContext(), "Item Removido", Toast.LENGTH_SHORT).show()
+        viewModel.removeStock {
+            Toast.makeText(requireContext(), "Item Removido", Toast.LENGTH_SHORT).show()
+            findNavController().navigateUp()
+        }
     }
 }

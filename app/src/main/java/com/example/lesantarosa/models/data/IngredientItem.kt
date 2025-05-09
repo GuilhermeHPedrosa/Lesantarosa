@@ -1,6 +1,7 @@
 package com.example.lesantarosa.models.data
 
 import com.example.lesantarosa.models.entities.Item
+import com.example.lesantarosa.models.enums.ItemType
 
 class IngredientItem(
     itemId: Long,
@@ -11,10 +12,11 @@ class IngredientItem(
     expirationDate: Long?,
     createdAt: Long,
     updatedAt: Long?,
+    itemType: ItemType = ItemType.INGREDIENT,
     val brand: String?,
     val supplier: String?,
     val nutritionalInfo: String?
-): Item(itemId, title, description, image, price, expirationDate, createdAt, updatedAt) {
+): Item(itemId, title, description, image, price, expirationDate, createdAt, updatedAt, itemType) {
 
     companion object {
 
@@ -28,6 +30,7 @@ class IngredientItem(
                 item.expirationDate,
                 item.createdAt,
                 item.updatedAt,
+                item.itemType,
                 brand,
                 supplier,
                 nutritionalInfo

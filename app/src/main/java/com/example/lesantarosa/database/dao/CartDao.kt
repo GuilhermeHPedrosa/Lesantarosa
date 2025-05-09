@@ -46,8 +46,8 @@ interface CartDao {
 
     @Query("""
         SELECT 
-            SUM(quantity) as totalQuantity,
-            SUM(quantity * price) as totalPrice
+            SUM(quantity) as itemCount,
+            SUM(quantity * price) as totalAmount
         FROM cart
         INNER JOIN item ON cart.itemId = item.itemId 
         INNER JOIN product ON cart.itemId = product.itemId
@@ -56,10 +56,9 @@ interface CartDao {
 
     @Query("""
         SELECT 
-            SUM(quantity) as totalQuantity, 
-            SUM(quantity * price) as totalPrice, 
-            SUM(quantity * discountedPrice) as totalDiscounts, 
-            SUM(quantity * price) - SUM(quantity * COALESCE(discountedPrice, 0)) as finalPrice
+            SUM(quantity) as itemCount, 
+            SUM(quantity * price) as totalAmount, 
+            SUM(quantity * discountedPrice) as totalDiscounts
         FROM cart 
         INNER JOIN item ON cart.itemId = item.itemId 
         INNER JOIN product ON cart.itemId = product.itemId

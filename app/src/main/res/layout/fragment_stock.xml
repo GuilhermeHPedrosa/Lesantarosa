@@ -5,47 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/actual_stock_input_layout"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="0"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <FrameLayout
+        android:id="@+id/actual_stock_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/min_stock_input_layout"/>
+        app:layout_constraintBottom_toTopOf="@id/stock_movements_fragment"/>
 
-    <EditText
-        android:id="@+id/min_stock_input_layout"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/stock_movements_fragment"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:background="@color/light_grey"
-        app:layout_constraintBottom_toTopOf="@id/max_stock_input_layout"/>
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintBottom_toTopOf="@id/bottom_card_view"
+        android:name="com.example.lesantarosa.ui.fragment.component.StockMovementFragment"/>
 
-    <EditText
-        android:id="@+id/max_stock_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:background="@color/light_grey"
-        app:layout_constraintBottom_toTopOf="@id/stock_transaction_history_button"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/stock_transaction_history_button"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottom_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="transaction history"
-        android:background="@color/light_grey"
-        app:layout_constraintBottom_toTopOf="@id/save_stock_button"/>
+        android:backgroundTint="@color/lighter_grey"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/save_stock_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:background="@color/light_grey"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save_stock_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            style="@style/defaultButton"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

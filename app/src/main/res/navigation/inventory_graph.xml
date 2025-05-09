@@ -34,11 +34,19 @@
             android:name="itemId"
             app:argType="long"/>
         <argument
+            android:name="itemTitle"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
             android:name="itemType"
             app:argType="com.example.lesantarosa.models.enums.ItemType"/>
         <argument
             android:name="initialPosition"
             app:argType="integer"/>
+
+        <action
+            android:id="@+id/action_pageManagement_to_pageTransactionHistory"
+            app:destination="@id/action_pageInventory_to_dialogCategory"/>
     </fragment>
 
     <!-- ===================== Dialog ===================== -->
@@ -52,7 +60,7 @@
             android:name="categoryId"
             app:argType="long"/>
         <argument
-            android:name="categoryTitle"
+            android:name="actualCategory"
             app:argType="string"
             app:nullable="true"/>
     </fragment>

@@ -1,4 +1,4 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

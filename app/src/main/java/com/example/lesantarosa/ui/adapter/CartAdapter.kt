@@ -1,11 +1,10 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.lesantarosa.databinding.CardItemBinding
 import com.example.lesantarosa.models.data.CartProduct
-import com.example.lesantarosa.models.data.ProductItem
 
 class CartAdapter(
     private val context: Context,

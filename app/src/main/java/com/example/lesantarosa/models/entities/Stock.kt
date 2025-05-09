@@ -31,10 +31,7 @@ class Stock(
     @PrimaryKey(autoGenerate = true)
     val stockId: Long = 0L,
     val itemId: Long,
-    val minStock: Int,
-    val maxStock: Int,
     val currentStock: Int,
     val reorderLevel: Int,
-    val measureUnit: MeasureUnit,
-    val itemType: ItemType
+    val measureUnit: MeasureUnit
 )

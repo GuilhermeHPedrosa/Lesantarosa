@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.lesantarosa.R
 import com.example.lesantarosa.databinding.CardItemBinding
 import com.example.lesantarosa.databinding.FragmentPageCheckoutBinding
-import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.models.entities.Order
 import com.example.lesantarosa.ui.fragment.component.CustomInput
 import com.example.lesantarosa.ui.viewmodel.CheckoutViewModel
@@ -35,7 +34,7 @@ class PageCheckoutFragment: PageFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.defineVisualComponents(VisualComponents())
+//        mainViewModel.defineVisualComponents(VisualComponents())
 
         viewModel = getViewModel<CheckoutViewModel>()
     }

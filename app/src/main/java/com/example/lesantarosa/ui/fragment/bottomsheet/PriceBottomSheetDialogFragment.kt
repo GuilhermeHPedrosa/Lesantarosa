@@ -14,7 +14,7 @@ import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_REQUEST_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_VALUE_KEY
 import com.example.lesantarosa.databinding.ButtonNumpadBinding
 import com.example.lesantarosa.databinding.DialogPriceBinding
-import com.example.lesantarosa.ui.adapter.textwatcher.PriceTextWatcher
+import com.example.lesantarosa.ui.watcher.PriceTextWatcher
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class PriceBottomSheetDialogFragment: BottomSheetDialogFragment() {

@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/menu_home"
-        android:title="@string/nav_home"/>
+    <item android:title="@string/nav_main_group">
+        <menu>
+            <group android:id="@+id/group_main">
+                <item
+                    android:id="@+id/menu_home"
+                    android:title="@string/nav_home"
+                    android:icon="@drawable/ic_shop"
+                    android:checkable="true"/>
 
-    <item
-        android:id="@+id/menu_sell"
-        android:title="@string/nav_sell"/>
+                <item
+                    android:id="@+id/menu_sell"
+                    android:title="@string/nav_sell"
+                    android:icon="@drawable/ic_sale"
+                    android:checkable="true"/>
 
-    <item
-        android:id="@+id/menu_orders"
-        android:title="@string/nav_orders"/>
+                <item
+                    android:id="@+id/menu_orders"
+                    android:title="@string/nav_orders"
+                    android:icon="@drawable/ic_box"
+                    android:checkable="true"/>
+            </group>
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/menu_products"
-        android:title="@string/nav_products"/>
+    <item android:title="@string/nav_inventory_group">
+        <menu>
+            <group android:id="@+id/group_inventory">
+                <item
+                    android:id="@+id/menu_products"
+                    android:title="@string/nav_products"
+                    android:icon="@drawable/ic_cake"
+                    android:checkable="true"/>
 
-    <item
-        android:id="@+id/menu_recipes"
-        android:title="@string/nav_recipes"/>
+                <item
+                    android:id="@+id/menu_recipes"
+                    android:title="@string/nav_recipes"
+                    android:icon="@drawable/ic_book"
+                    android:checkable="true"/>
 
-    <item
-        android:id="@+id/menu_ingredients"
-        android:title="@string/nav_ingredients"/>
+                <item
+                    android:id="@+id/menu_ingredients"
+                    android:title="@string/nav_ingredients"
+                    android:icon="@drawable/ic_chocolate"
+                    android:checkable="true"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>

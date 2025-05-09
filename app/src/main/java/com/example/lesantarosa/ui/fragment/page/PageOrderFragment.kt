@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.lesantarosa.R
 import com.example.lesantarosa.databinding.FragmentDefaultPagerBinding
 import com.example.lesantarosa.databinding.FragmentPageOrderBinding
-import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.component.CartFragment
 import com.example.lesantarosa.ui.fragment.component.OrdersFragment
 import com.example.lesantarosa.ui.viewmodel.OrderViewModel
@@ -28,7 +27,7 @@ class PageOrderFragment: PageFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.defineVisualComponents(VisualComponents())
+//        mainViewModel.defineVisualComponents(VisualComponents())
 
         viewModel = getViewModel<OrderViewModel>()
     }

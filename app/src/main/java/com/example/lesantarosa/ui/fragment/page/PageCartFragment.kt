@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.lesantarosa.R
 import com.example.lesantarosa.database.preferences.CartPreferences
 import com.example.lesantarosa.databinding.FragmentPageCartBinding
-import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.component.CartFragment
 import com.example.lesantarosa.ui.fragment.bottomsheet.CartOptionsBottomSheetDialog
 import com.example.lesantarosa.ui.viewmodel.CartViewModel
@@ -28,7 +27,7 @@ class PageCartFragment: PageFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.defineVisualComponents(VisualComponents())
+//        defineTabVisibility(View.VISIBLE)
 
         viewModel = getViewModel<CartViewModel>()
     }

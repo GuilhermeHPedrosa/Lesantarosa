@@ -13,18 +13,11 @@ class CategoryRepository(
 
     suspend fun save(category: Category): Resource<Unit> {
         return try {
-            webClient.save(category)
-                .also { if (it.error == null) { categoryDao.save(category) } }
+//            webClient.save(category)
+//                .also { if (it.error == null) { categoryDao.save(category) } }
 
-        } catch (e: Exception) {
-            Resource(null, e.message)
-        }
-    }
-
-    suspend fun update(category: Category): Resource<Unit> {
-        return try {
-            webClient.update(category)
-                .also { if (it.error == null) { categoryDao.save(category) } }
+            categoryDao.save(category)
+            Resource(Unit)
 
         } catch (e: Exception) {
             Resource(null, e.message)
@@ -33,16 +26,15 @@ class CategoryRepository(
 
     suspend fun remove(categoryId: Long): Resource<Unit> {
         return try {
-            webClient.remove(categoryId)
-                .also { if (it.error == null) { categoryDao.remove(categoryId) } }
+//            webClient.remove(categoryId)
+//                .also { if (it.error == null) { categoryDao.remove(categoryId) } }
+
+            categoryDao.remove(categoryId)
+            Resource(Unit)
 
         } catch (e: Exception) {
             Resource(null, e.message)
         }
-    }
-
-    suspend fun getCategoryById(categoryId: Long): Category? {
-        return categoryDao.getCategoryById(categoryId)
     }
 
     fun searchCategories(search: String, itemType: ItemType): LiveData<List<Category>> {

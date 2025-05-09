@@ -9,8 +9,7 @@ import com.example.lesantarosa.R
 import com.example.lesantarosa.database.utils.ItemTypeManager.defineItemType
 import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
 import com.example.lesantarosa.databinding.FragmentDefaultPagerBinding
-import com.example.lesantarosa.models.data.VisualComponents
-import com.example.lesantarosa.ui.adapter.viewpager.InventoryPagerAdapter
+import com.example.lesantarosa.ui.viewpager.InventoryPagerAdapter
 import com.example.lesantarosa.ui.viewmodel.InventoryViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -22,14 +21,14 @@ class PageInventoryFragment: PageFragment() {
 
     private lateinit var viewModel: InventoryViewModel
 
+    private val args by navArgs<PageInventoryFragmentArgs>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        defineItemType(args.itemType)
 
-        mainViewModel.defineVisualComponents(VisualComponents(tabLayout = true))
-
-        defineItemType(navArgs<PageInventoryFragmentArgs>().value.itemType)
-
-        viewModel = getViewModel<InventoryViewModel> { parametersOf(itemType) }
+        initializeViewModel()
+        initializeTabLayout()
     }
 
     override fun onCreateView(
@@ -48,19 +47,22 @@ class PageInventoryFragment: PageFragment() {
         setupTabLayout()
     }
 
+    private fun initializeViewModel() {
+        viewModel = getViewModel<InventoryViewModel> { parametersOf(itemType) }
+    }
+
     private fun setupViewPager() {
         val viewPager = binding.viewPagerContainer
         viewPager.adapter = InventoryPagerAdapter(this)
     }
 
     private fun setupTabLayout() {
-        TabLayoutMediator(tabLayout, binding.viewPagerContainer) { tab, position ->
+        TabLayoutMediator(tabLayout!!, binding.viewPagerContainer) { tab, position ->
             tab.text = when(position) {
                 0 -> R.string.tab_inventory_items
                 1 -> R.string.tab_inventory_stocks
                 2 -> R.string.tab_inventory_categories
                 else -> throw IllegalArgumentException("Invalid Position")
-
             }.let { getString(it) }
         }.attach()
     }

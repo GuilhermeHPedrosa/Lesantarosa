@@ -1,4 +1,4 @@
-package com.example.lesantarosa.ui.adapter.textwatcher
+package com.example.lesantarosa.ui.watcher
 
 import android.text.Editable
 import android.text.TextWatcher

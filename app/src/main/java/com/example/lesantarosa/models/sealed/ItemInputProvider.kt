@@ -1,6 +1,8 @@
 package com.example.lesantarosa.models.sealed
 
 import android.text.InputType
+import com.example.lesantarosa.R
+import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
 import com.example.lesantarosa.models.data.IngredientItem
 import com.example.lesantarosa.models.data.ProductItem
 import com.example.lesantarosa.models.data.RecipeItem
@@ -11,99 +13,106 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import kotlin.random.Random
 
-sealed class ItemInputProvider(item: Item?) {
+sealed class ItemInputProvider(private val item: Item?) {
 
-    protected val itemInputs: MutableList<CustomInput> = mutableListOf(
-        CustomInput("Title", "Invalid Title", Regex("^[a-zA-Z0-9\\s!@#\$%^&*()_+\\-=\\[\\]{};':\",./?]{4,}$"), InputType.TYPE_CLASS_TEXT, item?.title),
-        CustomInput("Description", "Invalid Description", Regex("^[a-zA-Z]{4,}\$"), InputType.TYPE_CLASS_TEXT, item?.description),
-        CustomInput("Price", "Invalid Price", Regex("^\\d+([.,]\\d{1,2})?\$"), (InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL), item?.price?.toString()),
-        CustomInput("Shelf Life ", "Invalid Shelf Life", Regex("^\\d+$"), InputType.TYPE_CLASS_NUMBER, item?.price?.toString())
+    private val itemInputs: List<CustomInput> = mutableListOf(
+        CustomInput(R.string.input_item_title_hint, R.string.input_item_title_error, Regex("^[a-zA-Z0-9\\s!@#\$%^&*()_+\\-=\\[\\]{};':\",./?]{4,}$"), InputType.TYPE_CLASS_TEXT, item?.title),
+        CustomInput(R.string.input_item_description_hint, R.string.input_item_description_hint, Regex("^[a-zA-Z]{4,}\$"), InputType.TYPE_CLASS_TEXT, item?.description),
+        CustomInput(R.string.input_item_price_hint, R.string.input_item_price_error, Regex("^\\d+([.,]\\d{1,2})?\$"), (InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL), item?.price?.toString()),
+        CustomInput(R.string.input_item_shelf_life_hint, R.string.input_item_shelf_life_error, Regex("^\\d+$"), InputType.TYPE_CLASS_NUMBER, item?.expirationDate?.toString())
     )
 
-    val getItemInputs: List<CustomInput> get() = itemInputs
+    protected val childInputs: MutableList<CustomInput> = mutableListOf()
 
-    protected fun createRawItem(itemId: Long): Item {
+    val getItemInputs: List<CustomInput> get() = itemInputs
+    val getChildInputs: List<CustomInput> get() = childInputs
+
+    protected fun createRawItem(): Item {
+        val itemId = item?.itemId ?: Random.nextLong()
         val title = itemInputs[0].getInputValue()
         val description = itemInputs[1].getInputValue()
         val price = itemInputs[2].getInputValue().toDouble()
 
         val actualDate = Instant.now()
-        val expirationDate = actualDate.plus(itemInputs[3].getInputValue().toLong(), ChronoUnit.DAYS)
+        val expirationDate = actualDate.plus(itemInputs[3].getInputValue().toLong(), ChronoUnit.DAYS).toEpochMilli()
 
-        return Item(itemId, title, description, null, price, expirationDate.toEpochMilli(), actualDate.toEpochMilli(), null)
+        val createdAt = item?.createdAt ?: actualDate.toEpochMilli()
+        val updatedAt = actualDate.toEpochMilli()
+
+        return Item(itemId, title, description, null, price, expirationDate, createdAt, updatedAt, itemType)
     }
 
     abstract fun createItem(): Item
 
+    // ===================== Product =====================
+
     class Product(item: Item?) : ItemInputProvider(item) {
 
+        private var productItem: ProductItem? = item as? ProductItem
+
         init {
-            val productItem = item as? ProductItem
-            itemInputs.addAll(listOf(
-                CustomInput("Weight", "Invalid Weight", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, productItem?.weight?.toString()),
-                CustomInput("Packaging", "Invalid Packaging", Regex("^[A-Za-z]+\$"), InputType.TYPE_CLASS_TEXT, productItem?.packaging),
-                CustomInput("Sales Count", "Invalid Quantity", Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, productItem?.salesCount?.toString())
+            childInputs.addAll(listOf(
+                CustomInput(R.string.input_product_weight_hint, R.string.input_product_weight_error, Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, productItem?.weight?.toString()),
+                CustomInput(R.string.input_product_packaging_hint, R.string.input_product_packaging_error, Regex("^[A-Za-z]+\$"), InputType.TYPE_CLASS_TEXT, productItem?.packaging),
+                CustomInput(R.string.input_product_sales_count_hint, R.string.input_product_sales_count_error, Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, productItem?.salesCount?.toString())
             ))
         }
 
-        override fun createItem(): Item {
-            val item = createRawItem(Random.nextLong())
-            val weight = itemInputs[4].getInputValue().toInt()
-            val packaging = itemInputs[5].getInputValue()
-            val salesCount = itemInputs[6].getInputValue().toInt()
+        override fun createItem(): ProductItem {
+            val item = createRawItem()
+            val weight = childInputs[0].getInputValue().toInt()
+            val packaging = childInputs[1].getInputValue()
+            val salesCount = childInputs[2].getInputValue().toInt()
 
             return ProductItem.createProduct(item, weight, packaging, salesCount)
         }
     }
 
+    // ===================== Recipe =====================
+
     class Recipe(item: Item?) : ItemInputProvider(item) {
 
+        private val recipeItem = item as? RecipeItem
+
         init {
-            val recipeItem = item as? RecipeItem
-            itemInputs.addAll(listOf(
-                CustomInput("Yield", "Invalid Yield", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.servings?.toString()),
-                CustomInput("Servings", "Invalid Servings", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.yield?.toString()),
-                CustomInput("Preparation Time", "Invalid Time", Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.preparationTime?.toString())
+            childInputs.addAll(listOf(
+                CustomInput(R.string.input_recipe_yield_hint, R.string.input_recipe_yield_error, Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.servings?.toString()),
+                CustomInput(R.string.input_recipe_servings_hint, R.string.input_recipe_servings_error, Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.yield?.toString()),
+                CustomInput(R.string.input_recipe_preparation_time_hint, R.string.input_recipe_preparation_time_error, Regex("^\\d+\$"), InputType.TYPE_CLASS_NUMBER, recipeItem?.preparationTime?.toString())
             ))
         }
 
-        override fun createItem(): Item {
-            val item = createRawItem(Random.nextLong())
-            val yield = itemInputs[4].getInputValue().toInt()
-            val servings = itemInputs[5].getInputValue().toInt()
-            val preparationTime = itemInputs[6].getInputValue().toInt()
+        override fun createItem(): RecipeItem {
+            val item = createRawItem()
+            val yield = childInputs[0].getInputValue().toInt()
+            val servings = childInputs[1].getInputValue().toInt()
+            val preparationTime = childInputs[2].getInputValue().toInt()
 
             return RecipeItem.createRecipe(item, yield, servings, preparationTime, Difficulty.MEDIUM)
         }
     }
 
+    // ===================== Ingredient =====================
+
     class Ingredient(item: Item?) : ItemInputProvider(item) {
 
+        private val ingredientItem = item as? IngredientItem
+
         init {
-            val ingredientItem = item as? IngredientItem
-            itemInputs.addAll(listOf(
-                CustomInput("Brand", "Invalid Brand", Regex("^[A-Za-zÀ-ÿ\\s'-]+\$"), InputType.TYPE_CLASS_TEXT, ingredientItem?.brand),
-                CustomInput("Supplier", "Invalid Supplier", Regex("^[A-Za-zÀ-ÿ\\s'-]+\$"), InputType.TYPE_CLASS_TEXT, ingredientItem?.supplier),
-                CustomInput("Nutritional Info", "Invalid Nutritional", Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, ingredientItem?.nutritionalInfo)
+            childInputs.addAll(listOf(
+                CustomInput(R.string.input_ingredient_brand_hint, R.string.input_ingredient_brand_error, Regex("^[A-Za-zÀ-ÿ\\s'-]+\$"), InputType.TYPE_CLASS_TEXT, ingredientItem?.brand),
+                CustomInput(R.string.input_ingredient_supplier_hint, R.string.input_ingredient_supplier_error, Regex("^[A-Za-zÀ-ÿ\\s'-]+\$"), InputType.TYPE_CLASS_TEXT, ingredientItem?.supplier),
+                CustomInput(R.string.input_ingredient_nutritional_info_hint, R.string.input_ingredient_nutritional_info_error, Regex("^\\d+([.,]\\d{1,2})?\$"), InputType.TYPE_CLASS_NUMBER, ingredientItem?.nutritionalInfo)
             ))
         }
 
-        override fun createItem(): Item {
-            val item = createRawItem(Random.nextLong())
-            val brand = itemInputs[4].getInputValue()
-            val supplier = itemInputs[5].getInputValue()
-            val nutritionalInfo = itemInputs[6].getInputValue()
+        override fun createItem(): IngredientItem {
+            val item = createRawItem()
+            val brand = childInputs[0].getInputValue()
+            val supplier = childInputs[1].getInputValue()
+            val nutritionalInfo = childInputs[2].getInputValue()
 
             return IngredientItem.createIngredient(item, brand, supplier, nutritionalInfo)
         }
     }
-
-//    protected fun <T> createItem(action: () -> T): T? {
-//        return try {
-//            action()
-//        } catch (e: Exception) {
-//            Log.i("", e.message.toString())
-//            null
-//        }
-//    }
 }

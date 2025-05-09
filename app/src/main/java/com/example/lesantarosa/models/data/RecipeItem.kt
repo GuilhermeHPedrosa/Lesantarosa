@@ -2,6 +2,7 @@ package com.example.lesantarosa.models.data
 
 import com.example.lesantarosa.models.entities.Item
 import com.example.lesantarosa.models.enums.Difficulty
+import com.example.lesantarosa.models.enums.ItemType
 
 class RecipeItem(
     itemId: Long,
@@ -12,11 +13,12 @@ class RecipeItem(
     expirationDate: Long?,
     createdAt: Long,
     updatedAt: Long?,
+    itemType: ItemType = ItemType.RECIPE,
     val yield: Int?,
     val servings: Int?,
     val preparationTime: Int?,
     val difficulty: Difficulty?
-): Item(itemId, title, description, image, price, expirationDate, createdAt, updatedAt) {
+): Item(itemId, title, description, image, price, expirationDate, createdAt, updatedAt, itemType) {
 
     companion object {
 
@@ -30,6 +32,7 @@ class RecipeItem(
                 item.expirationDate,
                 item.createdAt,
                 item.updatedAt,
+                item.itemType,
                 yield,
                 servings,
                 preparationTime,

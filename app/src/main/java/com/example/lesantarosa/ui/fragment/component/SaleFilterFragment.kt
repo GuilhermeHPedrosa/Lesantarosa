@@ -21,7 +21,7 @@ class SaleFilterFragment: Fragment() {
     private val searchFragmentContainer by lazy { binding.filterSearchFragmentContainer }
     private val filterButtonLinearLayout by lazy { binding.filterButtonLinearLayout }
 
-    private val searchFragment = SearchFragment()
+    private val searchFragment = SearchFragment(R.string.input_search_sale_hint)
 
     val actualSearch: LiveData<String?> get() = searchFragment.actualSearch
 
@@ -82,7 +82,7 @@ class SaleFilterFragment: Fragment() {
     private fun handleToPriceDialogButton() {
         val unregisteredItemButton = binding.filterUnregisteredItemButton
         unregisteredItemButton.setOnClickListener {
-            val direction = PageSellFragmentDirections.actionPageSellToPriceDialog(0f, 100000f)
+            val direction = PageSellFragmentDirections.actionPageSellToPriceDialog(0f, 25000f)
             findNavController().navigate(direction)
         }
     }

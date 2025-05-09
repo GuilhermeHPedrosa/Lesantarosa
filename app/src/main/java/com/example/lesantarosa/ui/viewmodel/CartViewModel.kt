@@ -13,7 +13,7 @@ class CartViewModel(
 
     val cartSummary = cartRepository.getCartSummary()
 
-    val totalPrice get() = cartSummary.value?.totalPrice ?: 0.0
+    val totalPrice get() = cartSummary.value?.totalAmount ?: 0.0
     val finalPrice get() = cartSummary.value?.finalPrice ?: 0.0
 
     fun clearCart() {

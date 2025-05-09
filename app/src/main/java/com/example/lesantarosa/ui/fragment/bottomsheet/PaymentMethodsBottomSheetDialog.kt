@@ -28,7 +28,7 @@ class PaymentMethodsBottomSheetDialog(
         PaymentMethod.entries.forEach { method ->
             val paymentButton = ButtonPaymentMethodBinding.inflate(inflater, paymentGrid, false).paymentButton
 
-            paymentButton.text = method.displayName
+            paymentButton.text = method.getMethodDisplay(context).first
             paymentButton.setOnClickListener { onMethodSelected(method) ; dismiss() }
 
             paymentGrid.addView(paymentButton)

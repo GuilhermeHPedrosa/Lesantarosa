@@ -27,14 +27,12 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text="@string/button_confirm"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/grey"/>
+            style="@style/defaultButton"/>
 
     </androidx.cardview.widget.CardView>
 

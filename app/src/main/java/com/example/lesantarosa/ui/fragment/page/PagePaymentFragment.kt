@@ -11,7 +11,6 @@ import com.example.lesantarosa.R
 import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_REQUEST_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.PRICE_VALUE_KEY
 import com.example.lesantarosa.databinding.FragmentPagePaymentBinding
-import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.bottomsheet.PaymentMethodsBottomSheetDialog
 import com.example.lesantarosa.ui.fragment.component.PaymentsFragment
 import com.example.lesantarosa.ui.viewmodel.PaymentViewModel
@@ -41,7 +40,7 @@ class PagePaymentFragment: PageFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.defineVisualComponents(VisualComponents())
+//        mainViewModel.defineVisualComponents(VisualComponents())
 
         viewModel = getViewModel<PaymentViewModel>{ parametersOf(finalPaymentPrice) }
     }

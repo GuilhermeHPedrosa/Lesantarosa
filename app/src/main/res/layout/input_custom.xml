@@ -5,13 +5,12 @@
     android:id="@+id/custom_input_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    app:hintTextColor="@color/light_grey"
-    style="@style/customInputLayout">
+    style="@style/defaultInputLayout">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/custom_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/defaultInputEditText"/>
 
 </com.google.android.material.textfield.TextInputLayout>

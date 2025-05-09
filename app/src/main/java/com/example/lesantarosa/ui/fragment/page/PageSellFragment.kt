@@ -10,7 +10,6 @@ import com.example.lesantarosa.R
 import com.example.lesantarosa.database.utils.FragmentKeys.QUANTITY_REQUEST_KEY
 import com.example.lesantarosa.database.utils.FragmentKeys.QUANTITY_VALUE_KEY
 import com.example.lesantarosa.databinding.FragmentPageSellBinding
-import com.example.lesantarosa.models.data.VisualComponents
 import com.example.lesantarosa.ui.fragment.component.ProductsForSaleFragment
 import com.example.lesantarosa.ui.viewmodel.SaleViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -23,8 +22,6 @@ class PageSellFragment: PageFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mainViewModel.defineVisualComponents(VisualComponents())
 
         viewModel = getViewModel<SaleViewModel>()
     }
@@ -59,8 +56,11 @@ class PageSellFragment: PageFragment() {
     }
 
     private fun observeSaleSummary() {
-        viewModel.saleSummary.observe(viewLifecycleOwner) { saleSummary ->
-            binding.goToCartButton.text = saleSummary.toString()
+        viewModel.saleSummary.observe(viewLifecycleOwner) { summary ->
+            with(binding.goToCartButton) {
+                text = summary.getSummary(requireContext())
+                isEnabled = summary.itemCount > 0
+            }
         }
     }
 

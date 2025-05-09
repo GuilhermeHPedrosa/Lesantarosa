@@ -31,7 +31,6 @@ import com.example.lesantarosa.retrofit.webclient.StockWebClient
 import com.example.lesantarosa.ui.viewmodel.CartViewModel
 import com.example.lesantarosa.ui.viewmodel.CheckoutViewModel
 import com.example.lesantarosa.ui.viewmodel.InventoryViewModel
-import com.example.lesantarosa.ui.viewmodel.MainViewModel
 import com.example.lesantarosa.ui.viewmodel.ManagementViewModel
 import com.example.lesantarosa.ui.viewmodel.OrderViewModel
 import com.example.lesantarosa.ui.viewmodel.PaymentViewModel
@@ -165,10 +164,6 @@ val appModules = module {
     single<OrderRepository> { OrderRepository(get<OrderDao>(), get<OrderWebClient>()) }
 
     // ===================== ViewModels =====================
-
-    viewModel<MainViewModel> {
-        MainViewModel()
-    }
 
     viewModel<InventoryViewModel> { (itemType: ItemType) ->
         InventoryViewModel(

@@ -11,7 +11,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.example.lesantarosa.R
 import com.example.lesantarosa.databinding.FragmentListBinding
 import com.example.lesantarosa.repository.Resource
-import com.example.lesantarosa.ui.adapter.recyclerview.ListAdapter
+import com.example.lesantarosa.ui.adapter.ListAdapter
 
 abstract class ListFragment<T>: Fragment() {
 
@@ -40,10 +40,11 @@ abstract class ListFragment<T>: Fragment() {
         initializeFilterFragment()
         initializeRecyclerView()
 
-        setupSearchFragment()
+        setupFilterFragment()
         setupRecyclerView()
 
         observeMediator()
+        observeListFilters()
     }
 
     override fun onDestroyView() {
@@ -51,13 +52,12 @@ abstract class ListFragment<T>: Fragment() {
         _binding = null
     }
 
-    private fun setupSearchFragment() {
-        //verificar se há um filter fragment já acoplado, evitando vazamentos de memoria
-        filterFragment?.let {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.search_fragment_container, it)
-                .commit()
-        }
+    private fun setupFilterFragment() {
+        val filter = filterFragment ?: return
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.filter_fragment_container, filter)
+            .commit()
     }
 
     private fun setupRecyclerView() {
@@ -66,7 +66,6 @@ abstract class ListFragment<T>: Fragment() {
     }
 
     private fun observeMediator() {
-        // Exibir uma lista vazia ou um estado de carregamento no refresh de data
         mediator.observe(viewLifecycleOwner) { resource ->
             resource.data?.let { adapter.refresh(it) }
             resource.error?.let { Log.i("", "Error loading items: $it") }
@@ -82,8 +81,10 @@ abstract class ListFragment<T>: Fragment() {
         }
     }
 
-    protected abstract fun initializeFilterFragment()
+    protected open fun initializeFilterFragment() {}
 
     protected abstract fun initializeRecyclerView()
+
+    protected abstract fun observeListFilters()
 
 }

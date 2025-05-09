@@ -1,10 +1,9 @@
 package com.example.lesantarosa.models.entities
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
+import com.example.lesantarosa.models.enums.ItemType
 
 @Entity(
     tableName = "item",
@@ -13,7 +12,6 @@ import kotlinx.parcelize.Parcelize
         Index(value = ["title"])
     ]
 )
-@Parcelize
 open class Item(
     @PrimaryKey(autoGenerate = true)
     val itemId: Long = 0L,
@@ -23,5 +21,6 @@ open class Item(
     val price: Double,
     val expirationDate: Long?,
     val createdAt: Long,
-    val updatedAt: Long?
-): Parcelable
+    val updatedAt: Long?,
+    val itemType: ItemType,
+)

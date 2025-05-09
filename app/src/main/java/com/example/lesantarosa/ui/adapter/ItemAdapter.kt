@@ -1,4 +1,4 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.example.lesantarosa.ui.fragment.formatPrice
 
 class ItemAdapter(
     private val context: Context,
-    var setItemClick: (itemId: Long) -> Unit = {}
+    var setItemClick: (item: Item) -> Unit = {}
 ): ListAdapter<Item>() {
 
     inner class ViewHolder(private val binding: CardItemBinding): ListViewHolder<Item>(binding.root) {
@@ -19,7 +19,7 @@ class ItemAdapter(
 
         init {
             itemView.setOnClickListener {
-                if (::item.isInitialized) { setItemClick(item.itemId) }
+                if (::item.isInitialized) { setItemClick(item) }
             }
         }
 
@@ -32,11 +32,11 @@ class ItemAdapter(
             val title = binding.itemTitle
             title.text = item.title
 
-            val category = binding.itemCategory
-            category.text = item.description
+            val description = binding.itemDescription
+            description.text = item.description
 
-            val price = binding.itemPrice
-            price.text = item.price.formatPrice()
+            val info = binding.itemInfo
+            info.text = item.price.formatPrice()
         }
     }
 

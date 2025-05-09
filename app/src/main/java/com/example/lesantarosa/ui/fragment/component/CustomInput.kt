@@ -3,15 +3,18 @@ package com.example.lesantarosa.ui.fragment.component
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings.Global.getString
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import androidx.annotation.StringRes
 import com.example.lesantarosa.databinding.InputCustomBinding
 import com.google.android.material.textfield.TextInputLayout
 
 class CustomInput(
-    private val hint: String,
-    private val error: String,
+    private val context: Context,
+    @StringRes private val hint: Int,
+    @StringRes private val error: Int,
     private val regex: Regex,
     private val inputType: Int,
     initialValue: String? = null
@@ -20,13 +23,13 @@ class CustomInput(
     private var inputValue = initialValue ?: ""
     private val handler = Handler(Looper.getMainLooper())
 
-    fun createInputLayout(context: Context): TextInputLayout {
+    fun createInputLayout(): TextInputLayout {
         val binding = InputCustomBinding.inflate(LayoutInflater.from(context))
 
         val inputLayout = binding.customInputLayout
         val inputEditText = binding.customEditText
 
-        inputLayout.hint = hint
+        inputLayout.hint = context.getString(hint)
 
         inputEditText.inputType = inputType
         inputEditText.setText(inputValue)
@@ -53,13 +56,12 @@ class CustomInput(
                 handler.postDelayed(runnable!!, 400)
             }
         })
-
         return binding.customInputLayout
     }
 
     private fun validateInput(inputLayout: TextInputLayout, text: String) {
         if (text.isNotBlank() && !regex.matches(text)) {
-            inputLayout.error = error
+            inputLayout.error = context.getString(hint)
             inputLayout.isErrorEnabled = true
         } else {
             inputLayout.error = null
@@ -68,6 +70,7 @@ class CustomInput(
     }
 
     fun getInputValue(): String {
-        return inputValue.takeIf { regex.matches(it) } ?: throw IllegalArgumentException(error)
+        return inputValue.takeIf { regex.matches(it) }
+            ?: throw IllegalArgumentException()
     }
 }

@@ -42,7 +42,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_more"
-                android:contentDescription="@string/dialog_options_button_close_content_description"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -51,12 +50,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:text="@string/button_save"
-                android:textAllCaps="false"
                 app:layout_constraintStart_toEndOf="@id/close_options_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/defaultButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

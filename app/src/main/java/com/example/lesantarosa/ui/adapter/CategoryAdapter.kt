@@ -1,4 +1,4 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import com.example.lesantarosa.models.entities.Category
 
 class CategoryAdapter(
     private val context: Context,
-    var setItemClick: (categoryId: Long, title: String) -> Unit = { _, _ -> }
+    var setItemClick: (category: Category) -> Unit = {}
 ): ListAdapter<Category>() {
 
     inner class ViewHolder(private val binding: CardCategoryBinding): ListViewHolder<Category>(binding.root) {
@@ -17,9 +17,7 @@ class CategoryAdapter(
 
         init {
             itemView.setOnClickListener {
-                if (::category.isInitialized) {
-                    setItemClick(category.categoryId, category.title)
-                }
+                if (::category.isInitialized) { setItemClick(category) }
             }
         }
 

@@ -12,10 +12,10 @@ interface StockService {
     @POST("stock")
     suspend fun save(@Body stock: Stock)
 
-    @PUT("stock/{stockId}")
-    suspend fun update(@Path("stockId") stockId: Long, @Body stock: Stock)
+    @PUT("stock/{itemId}")
+    suspend fun update(@Path("itemId") itemId: Long, @Body newQuantity: Int)
 
-    @DELETE("stock/{stockId}")
-    suspend fun remove(@Path("stockId") stockId: Long)
+    @DELETE("stock/{itemId}")
+    suspend fun remove(@Path("itemId") itemId: Long)
 
 }

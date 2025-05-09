@@ -28,7 +28,7 @@ class QuantityBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
     private val args by lazy { navArgs<QuantityBottomSheetDialogFragmentArgs>().value }
 
-    private var selectedQuantity = 0
+    private var selectedQuantity = args.initialQuantity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,6 @@ class QuantityBottomSheetDialogFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializeSelectedQuantity()
 
         setupInputLayoutTextWatcher()
         setupNumpadButtons()
@@ -50,10 +49,10 @@ class QuantityBottomSheetDialogFragment: BottomSheetDialogFragment() {
         handleSaveButton()
     }
 
-    private fun initializeSelectedQuantity() {
-        val initialQuantity = args.initialQuantity
-        selectedQuantity = initialQuantity
-    }
+//    private fun initializeSelectedQuantity() {
+//        val initialQuantity = args.initialQuantity
+//        selectedQuantity = initialQuantity
+//    }
 
     private fun setupInputLayoutTextWatcher() {
         inputLayout.addTextChangedListener {
@@ -76,7 +75,6 @@ class QuantityBottomSheetDialogFragment: BottomSheetDialogFragment() {
     }
 
     private fun inflateNumpadButton(char: String): Button {
-        val layoutInflater = LayoutInflater.from(requireContext())
         val layout = ButtonNumpadBinding.inflate(layoutInflater, numpadLayout, false).numpadButton
 
         layout.text = char

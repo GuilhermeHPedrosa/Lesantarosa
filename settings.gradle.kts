@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Lesantarosa"
 include(":app")
- 

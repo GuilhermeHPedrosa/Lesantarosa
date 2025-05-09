@@ -1,28 +1,27 @@
 package com.example.lesantarosa.ui.fragment.component
 
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lesantarosa.database.utils.ItemTypeManager.itemType
 import com.example.lesantarosa.databinding.FragmentCreationBinding
-import com.example.lesantarosa.models.data.RecipeItem
 import com.example.lesantarosa.models.entities.Item
 import com.example.lesantarosa.models.enums.ItemType
 import com.example.lesantarosa.models.sealed.ItemInputProvider
 import com.example.lesantarosa.ui.viewmodel.ManagementViewModel
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 
 class CreationFragment: Fragment() {
 
     private lateinit var binding: FragmentCreationBinding
+
+    private val itemLinearLayout by lazy { binding.cardItemCreation.itemInputLinearLayout }
+    private val childLinearLayout by lazy { binding.cardChildCreation.childInputLinearLayout }
 
     private val viewModel: ManagementViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
@@ -42,9 +41,12 @@ class CreationFragment: Fragment() {
 
         viewModel.getItem {
             initializeInputProvider(it)
-            initializeItemInputLayouts()
+
+            initializeItemInputs()
+            initializeChildInputs()
         }
 
+        handleChildCardClick()
         handleSaveButton()
     }
 
@@ -56,16 +58,31 @@ class CreationFragment: Fragment() {
         }
     }
 
-    private fun initializeItemInputLayouts() {
-        val inputFieldsLinearLayout = binding.inputFieldsLinearLayout
+    private fun initializeItemInputs() {
+        inputProvider.getItemInputs.forEach {
+            val inputLayout = it.createInputLayout(requireContext())
+            itemLinearLayout.addView(inputLayout)
+        }
+    }
 
-        val itemInputs = inputProvider.getItemInputs
-        itemInputs.forEach { inputFieldsLinearLayout.addView(it.createInputLayout(requireContext())) }
+    private fun initializeChildInputs() {
+        inputProvider.getChildInputs.forEach {
+            val inputLayout = it.createInputLayout(requireContext())
+            childLinearLayout.addView(inputLayout)
+        }
+    }
+
+    private fun handleChildCardClick() {
+        val cardTextview = binding.cardChildCreation.childCreationTextview
+        cardTextview.setOnClickListener {
+            it.isSelected = !it.isSelected
+            childLinearLayout.isVisible = !childLinearLayout.isVisible
+        }
     }
 
     private fun handleSaveButton() {
-        val confirmButton = binding.confirmButton
-        confirmButton.setOnClickListener {
+        val saveItemButton = binding.saveItemButton
+        saveItemButton.setOnClickListener {
             try {
                 val item = inputProvider.createItem()
                 viewModel.saveItem(item) {

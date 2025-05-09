@@ -1,10 +1,12 @@
-package com.example.lesantarosa.ui.adapter.recyclerview
+package com.example.lesantarosa.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.lesantarosa.databinding.CardItemBinding
 import com.example.lesantarosa.models.data.ProductItem
+import com.example.lesantarosa.ui.fragment.formatPrice
+import com.example.lesantarosa.ui.fragment.formatWeight
 
 class SaleAdapter(
     private val context: Context,
@@ -26,6 +28,12 @@ class SaleAdapter(
 
             val title = binding.itemTitle
             title.text = productItem.title
+
+            val description = binding.itemDescription
+            description.text = productItem.weight?.formatWeight()
+
+            val info = binding.itemInfo
+            info.text = productItem.price.formatPrice()
         }
     }
 

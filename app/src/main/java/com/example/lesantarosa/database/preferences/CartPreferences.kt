@@ -31,9 +31,8 @@ object CartPreferences {
     }
 
     suspend fun updateNote(context: Context, note: String?) {
-        note?.takeIf { it.isNotEmpty() }?.let {
-            saveNote(context, it)
-        } ?: clearNote(context)
+        note?.takeIf { it.isNotEmpty() }
+            ?.let { saveNote(context, it) } ?: clearNote(context)
     }
 
     fun getCartNote(context: Context): Flow<String> {
@@ -56,7 +55,8 @@ object CartPreferences {
     }
 
     suspend fun updateDiscount(context: Context, discount: Double?) {
-        discount?.takeIf { it > 0 }?.let { saveDiscount(context, it) } ?: clearDiscount(context)
+        discount?.takeIf { it > 0 }
+            ?.let { saveDiscount(context, it) } ?: clearDiscount(context)
     }
 
     fun getCartDiscount(context: Context): Flow<Double> {

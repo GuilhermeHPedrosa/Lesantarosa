@@ -22,7 +22,7 @@ class OrderFilterFragment: Fragment() {
 
     private lateinit var binding: CardOrderFilterBinding
 
-    private val searchFragment = SearchFragment()
+    private val searchFragment = SearchFragment(R.string.input_search_order_hint)
 
     private val statusPopup by lazy { initializeStatusPopup() }
     private val orderStatus: MutableLiveData<OrderStatus?> = MutableLiveData()
@@ -35,7 +35,7 @@ class OrderFilterFragment: Fragment() {
         }
 
         addSource(searchFragment.actualSearch) { update() }
-        addSource(orderStatus) { binding.filterByStatusButton.text = getString(it?.displayName ?: R.string.order_status_all); update() }
+        addSource(orderStatus) { binding.filterByStatusButton.text = it?.getStatusDisplay(requireContext())?.first ; update() }
     }
 
     override fun onCreateView(
@@ -61,19 +61,21 @@ class OrderFilterFragment: Fragment() {
         val popupWindow = PopupWindow(popupLayout.root, WRAP_CONTENT, WRAP_CONTENT, true)
         popupWindow.elevation = 10f
 
-        val statusLayouts = OrderStatus.entries.map { inflateStatusButton(it.icon, it.displayName, it) }
+        val statusLayouts = OrderStatus.entries.map { inflateStatusButton(it) }
         statusLayouts.forEach { popupLayout.orderStatusLinearLayout.addView(it) }
 
         return popupWindow
     }
 
-    private fun inflateStatusButton(icon: Int, displayName: Int, status: OrderStatus?): View {
+    private fun inflateStatusButton(status: OrderStatus): View {
+        val display = status.getStatusDisplay(requireContext())
+        val name = display.first
+        val icon = display.second
+
         val textview = TextviewOrderStatusBinding.inflate(LayoutInflater.from(requireContext()), null, false).root
-        textview.text = getString(displayName)
+        textview.text = name
 
-        val drawable = ContextCompat.getDrawable(requireContext(), icon)
-        textview.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-
+        textview.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
         textview.setOnClickListener {
             orderStatus.value = status
             statusPopup.dismiss()

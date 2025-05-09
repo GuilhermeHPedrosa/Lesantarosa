@@ -1,25 +1,27 @@
 package com.example.lesantarosa.ui.fragment.component
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.lesantarosa.models.entities.Order
+import com.example.lesantarosa.models.enums.OrderStatus
 import com.example.lesantarosa.models.sealed.OrderItem
 import com.example.lesantarosa.models.sealed.OrderItem.DateHeader
 import com.example.lesantarosa.models.sealed.OrderItem.OrderEntry
-import com.example.lesantarosa.ui.adapter.recyclerview.OrderAdapter
+import com.example.lesantarosa.ui.adapter.OrderAdapter
 import com.example.lesantarosa.ui.viewmodel.OrderViewModel
 import java.time.Instant
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class OrdersFragment: ListFragment<OrderItem>() {
 
     private val viewModel: OrderViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
+    private lateinit var filterMediator: LiveData<Pair<String?, OrderStatus?>>
+
     override fun initializeFilterFragment() {
         val orderFilterFragment = OrderFilterFragment()
-            .also { observeFilterUpdates(it) }
+        filterMediator = orderFilterFragment.filterMediator
 
         this.filterFragment = orderFilterFragment
     }
@@ -31,12 +33,10 @@ class OrdersFragment: ListFragment<OrderItem>() {
         this.adapter = adapter
     }
 
-    private fun observeFilterUpdates(orderFilterFragment: OrderFilterFragment) {
-        orderFilterFragment.filterMediator.observe(viewLifecycleOwner) { it ->
-            val orders = viewModel.searchOrders(it.first, it.second)
-                .map { formatOrderItems(it) }
-
-            updateSource(orders)
+    override fun observeListFilters() {
+        filterMediator.observe(viewLifecycleOwner) { it ->
+            val newSource = viewModel.searchOrders(it.first, it.second).map { formatOrderItems(it) }
+            updateSource(newSource)
         }
     }
 
